@@ -81,7 +81,7 @@ public class tablero : MonoBehaviour
 
     }
 
-    // FUNCIONES
+    // FUNCIONES (ASPECTO CONTROLADOR)
 
     public void ActivarInterfaz()
     {
@@ -89,16 +89,13 @@ public class tablero : MonoBehaviour
         bool estadoActual = interfazPrincipal.activeSelf;
         interfazPrincipal.SetActive(!estadoActual);
         mando.SetActive(false);
-
+    // ASPECTO MODELO
         if(!estadoActual & indicador==2)
-            {
+            { // MODELO VISTA actualizado.
                 Intrucciones.text = "Perfecto! Interactuaste con la interfaz, ahora vamos a interactuar con objetos, puedes cerrarla con J. Presiona H cuando estés listo.";
             }
-            
-            
         }
     }
-
     public void SiguienteEtapa(){
          if(Input.GetKeyDown(KeyCode.H)){
             StartCoroutine(CambiarPantallaConRetraso(1));

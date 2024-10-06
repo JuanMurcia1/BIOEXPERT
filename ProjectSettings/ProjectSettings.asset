@@ -936,7 +936,13 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
     UNet: 1
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -956,11 +962,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: a0117611-0561-4184-b404-70730834ef84
+  cloudProjectId: e286ebef-c82d-4876-89bf-49457dddea04
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: VRTest
-  organizationId: sergio-andres-magana-saa
+  organizationId: unity_3d8b6f94d7bd0bb48857
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
