@@ -6,8 +6,11 @@ using TMPro;
 
 public class tablero : MonoBehaviour
 {
-    
-    
+    public GameObject maniqui;
+    public GameObject SPO2;
+    public GameObject presion;
+    public GameObject monitorizacion;
+    public GameObject DEA;
     public GameObject desfibrilador;
     public TextMeshProUGUI Intrucciones;
     public GameObject Intrucciones2;
@@ -44,14 +47,14 @@ public class tablero : MonoBehaviour
         if (indicador == 2)
         {
             Debug.Log("ETAPA 2");
-            Intrucciones.text = "ETAPA 2   Aquí aprenderás a desplegar la interfaz y observar los módulos disponibles, Observa el botón resaltado en azúl y oprimelo en tu mando.";
+            Intrucciones.text = "ETAPA 2   Aquí aprenderás a desplegar la interfaz y observar los módulos disponibles, Observa el botón resaltado en azúl y oprímelo en tu mando. abre la interfaz con (J)";
             gatilloLight.enabled = false;
             
         }
 
         if (indicador == 3)
         {
-            Intrucciones.text= "Visualiza el desfibrilador, ahora, acércate y estira tu mano, cuando estés cerca del objeto, presiona el gatillo trasero reflejado en el holograma del mando.";
+            Intrucciones.text= "Visualiza el desfibrilador, ahora, acércate y estira tu mano, cuando estés cerca del objeto, presiona el gatillo trasero reflejado en el holograma del mando, PRESIONA H cuando hayas terminado.";
             Debug.Log("ETAPA 3");
             desfibrilador.SetActive(true);
             mando.SetActive(true);
@@ -60,11 +63,16 @@ public class tablero : MonoBehaviour
         }
          if (indicador == 4)
         {
-            Intrucciones.text= "¡Excelente trabajo! Has completado el tutorial básico. Antes de terminar, reconozcamos el entorno.Aquí podrás encontrar todos los elementos necesarios para las prácticas, ve y explora. Cuando estés listo presiona el botón del menú H para seleccionar qué tipo de experiencia quieres realizar." ;
+            Intrucciones.text= "¡Excelente trabajo! Has completado el tutorial básico. Antes de terminar, reconozcamos el entorno.Aquí podrás encontrar todos los elementos necesarios para las prácticas.Cuando estés listo presiona el botón del menú J para seleccionar qué tipo de experiencia quieres realizar." ;
             Debug.Log("ETAPA LIBRE");
             desfibrilador.SetActive(true);
             mando.SetActive(false);
             gatilloLight.enabled = true;
+            DEA.SetActive(true);
+            presion.SetActive(true);
+            SPO2.SetActive(true);
+            monitorizacion.SetActive(true);
+            maniqui.SetActive(true);
            
             
 
@@ -82,9 +90,9 @@ public class tablero : MonoBehaviour
         interfazPrincipal.SetActive(!estadoActual);
         mando.SetActive(false);
 
-        if(!estadoActual)
+        if(!estadoActual & indicador==2)
             {
-                Intrucciones.text = "Perfecto! Interactuaste con la interfaz, ahora vamos a interactuar con objetos, presiona H cuando estés listo.";
+                Intrucciones.text = "Perfecto! Interactuaste con la interfaz, ahora vamos a interactuar con objetos, puedes cerrarla con J. Presiona H cuando estés listo.";
             }
             
             

@@ -30,13 +30,13 @@ public void ColorMando()
     if (tableroScript.indicador == 1) {
   
         Jostik.GetComponent<Renderer>().material = newMaterial;
-        Debug.Log("Se activono joda");
+        
 
     }else if (tableroScript.indicador ==2)
     {
         JostikButtonInterfaz.GetComponent<Renderer>().material = newMaterial;
         Jostik.GetComponent<Renderer>().material = originalMaterial;
-        Debug.Log("Se activono joda2");
+        
 
     }else if (tableroScript.indicador ==3)
     {
