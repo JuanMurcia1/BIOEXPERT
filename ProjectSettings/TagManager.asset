@@ -8,6 +8,12 @@ TagManager:
   - Bola
   - brazo
   - presaqui
+  - Maniqui
+  - Desfibrilador
+  - Monitoriza
+  - Presion
+  - SPO2
+  - DEA
   layers:
   - Default
   - TransparentFX
