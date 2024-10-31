@@ -14,6 +14,11 @@ TagManager:
   - Presion
   - SPO2
   - DEA
+  - Perilla
+  - PerillaOff
+  - BotonInvasivo
+  - signosIndependiente
+  - PerillaRight
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,8 @@ public class Desfibrilador : MonoBehaviour
     
     public Light lightPresion;
     public Light lightDEA;
+
+
     
 
     private void Start()
@@ -50,7 +52,7 @@ public class Desfibrilador : MonoBehaviour
             
             lightPresion.enabled = true;
 
-        }else if ( args.interactable.gameObject.tag == "SPOA")
+        }else if ( args.interactable.gameObject.tag == "SPO2")
         {
             Debug.Log ("SP");
             lightSPO2.enabled = true;
@@ -85,7 +87,7 @@ public class Desfibrilador : MonoBehaviour
             
             lightPresion.enabled = false;
 
-        }else if ( args.interactable.gameObject.tag == "SPOA")
+        }else if ( args.interactable.gameObject.tag == "SPO2")
         {
             
             lightSPO2.enabled = false;
