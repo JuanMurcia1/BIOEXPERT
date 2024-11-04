@@ -7,7 +7,7 @@ using TMPro;
 public class DialogoSignos : MonoBehaviour
 {
     public TextMeshProUGUI instruccion;
-     public GameObject flechaMonitori;
+    public GameObject flechaMonitori;
     public GameObject flechaSPO2;
     public GameObject flechaPresion;
     private Vector3 vector3Monitori;

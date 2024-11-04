@@ -19,6 +19,8 @@ TagManager:
   - BotonInvasivo
   - signosIndependiente
   - PerillaRight
+  - Palas
+  - PalasMesa
   layers:
   - Default
   - TransparentFX

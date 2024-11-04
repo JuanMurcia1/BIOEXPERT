@@ -12,6 +12,7 @@ public class Desfibrilador : MonoBehaviour
     
     public Light lightPresion;
     public Light lightDEA;
+    public Light lightPalas;
 
 
     
@@ -26,6 +27,7 @@ public class Desfibrilador : MonoBehaviour
         lightDEA.enabled = false;
         lightPresion.enabled = false;
         lightSPO2.enabled = false;
+        lightPalas.enabled= false;
     }
 
    
@@ -34,12 +36,12 @@ public class Desfibrilador : MonoBehaviour
     {
          if (args.interactable.gameObject.tag == "Maniqui")
         {
-            Debug.Log("maniqui");
+            
             
             areaLightmani.enabled = true;   
         }else if ( args.interactable.gameObject.tag == "Desfibrilador")
         {
-            Debug.Log("desfibrilador");
+            
             areaLight.enabled = true;
 
         }else if ( args.interactable.gameObject.tag == "Monitoriza")
@@ -54,13 +56,18 @@ public class Desfibrilador : MonoBehaviour
 
         }else if ( args.interactable.gameObject.tag == "SPO2")
         {
-            Debug.Log ("SP");
+           
             lightSPO2.enabled = true;
 
         }else if ( args.interactable.gameObject.tag == "DEA")
         {
             
             lightDEA.enabled = true;
+
+        }else if ( args.interactable.gameObject.tag == "PalasMesa")
+        {
+            
+            lightPalas.enabled = true;
 
         }
 
@@ -96,6 +103,11 @@ public class Desfibrilador : MonoBehaviour
         {
             
             lightDEA.enabled = false;
+
+        }else if ( args.interactable.gameObject.tag == "PalasMesa")
+        {
+            
+            lightPalas.enabled = false;
 
         }
     }

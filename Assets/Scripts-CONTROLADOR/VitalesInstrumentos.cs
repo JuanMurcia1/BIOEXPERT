@@ -20,6 +20,7 @@ public class VitalesInstrumentos : MonoBehaviour
     public DialogoSignos dialogoSignos;
     public Desfibrilador desfibrilador;
     
+    
    
 
     void Start()
