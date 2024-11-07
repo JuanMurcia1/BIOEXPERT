@@ -80,14 +80,14 @@ public class DialogoSignos : MonoBehaviour
             " \n\n Cuando hayas terminado presiona H ";
         }else if (indicador ==3)
         {
-            instruccion.text = "perfecto!, ahora vamos a empezar a colocar los elementos" + 
+            instruccion.text = "Perfecto!, ahora vamos a empezar a colocar los elementos" + 
             " de bioinstrumentación en el desfibrilador y maniquí, presiona H para ver el orden" +
             " correcto en el que tienes que colocar cada elemento.";
 
         }else if (indicador ==4)
         {
 
-            instruccion.text= "el orden es: \n\n  1.Electrodos \n\n 2.Interfaz de pulsioximetría \n\n 3.La interfaz de tensión arterial";
+            instruccion.text= "El orden es: \n\n  1.Electrodos \n\n 2.Interfaz de pulsioximetría \n\n 3.La interfaz de tensión arterial";
             flechaMonitori.SetActive(true);
             desfibrilador.lightMonitoriza.enabled = true;
             PasoNext= false;
@@ -97,7 +97,7 @@ public class DialogoSignos : MonoBehaviour
 
         }else if (indicador ==5)
         {
-            instruccion.text= "el orden es: \n\n  1.Electrodos \n\n 2.Interfaz de pulsioximetría \n\n 3.La interfaz de tensión arterial";
+            instruccion.text= "El orden es: \n\n  1.Electrodos \n\n 2.Interfaz de pulsioximetría \n\n 3.La interfaz de tensión arterial";
             
             
             
@@ -105,7 +105,7 @@ public class DialogoSignos : MonoBehaviour
 
         }else if (indicador ==6)
         {
-            instruccion.text= "el orden es: \n\n  1.Electrodos \n\n 2.Interfaz de pulsioximetría \n\n 3.La interfaz de tensión arterial";
+            instruccion.text= "El orden es: \n\n  1.Electrodos \n\n 2.Interfaz de pulsioximetría \n\n 3.La interfaz de tensión arterial";
             
             
             PasoNext= true;

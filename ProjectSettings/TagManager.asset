@@ -21,6 +21,7 @@ TagManager:
   - PerillaRight
   - Palas
   - PalasMesa
+  - PerillaManual
   layers:
   - Default
   - TransparentFX

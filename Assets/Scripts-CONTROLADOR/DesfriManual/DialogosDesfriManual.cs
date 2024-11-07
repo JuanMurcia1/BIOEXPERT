@@ -8,6 +8,7 @@ public class DialogosDesfriManual : MonoBehaviour
 {
     public TextMeshProUGUI instruccion;
     public GameObject perillaOff;
+    public GameObject perillaManual;
     public Desfibrilador desfibrilador;
     public Transform PalasMesaOriginal;
     public Transform DEAoRIGINAL;
@@ -22,6 +23,8 @@ public class DialogosDesfriManual : MonoBehaviour
     public GameObject aciertoVisual1;
     public GameObject aciertoVisual2;
     public  bool PasoNext;
+    public GameObject interfazManual;
+    public VitalesInstrumentosDesfri vitalesInstrumentosDesfri;
     // Start is called before the first frame update
     void Start()
     {
@@ -72,15 +75,59 @@ public class DialogosDesfriManual : MonoBehaviour
             instruccion.text= "Perfecto!, has conectado bien todos los elementos necesarios, ahora vamos a interactuar con el desfibrilador" +
             " y la interfaz de desfibrilación manual. \n\n Presion H para avanzar";
             aciertoVisual1.SetActive(false);
+            
 
         }else if (indicador ==5)
         {
 
             instruccion.text= "Encendido del desfibrilador" +
-            "\n\n Apunta a la perilla para ubicarla en el modo desfibrilación automática (DEA). ";
+            "\n\n Apunta a la perilla para ubicarla en el modo desfibrilación automática (DEA). " +
+            "Esto permitirá encender el desfibrilador y mostrar la interfaz correspondiente al módulo elegido.";
+    
+
             
        
             PasoNext = false;
+        }else if (indicador ==6)
+        { 
+            instruccion.text= "!Bien hecho!." + "\n\nSelección de energía" +
+            "\n\n Interactua Con la perilla de ratón, resaltada en azúl, para disminuir la energía " +
+            "Esto nos permite elegir la energía que posteriormente se descargará sobre el paciente.";
+
+            
+
+            
+       
+            
+        }else if (indicador ==7)
+        {
+
+            instruccion.text= "Procesos de descarga automática" +
+            "\n\n Interactua con el botón de confirmación resaltado en azúl para establecer la energía. ";
+
+            
+       
+            
+        }else if (indicador ==8)
+        {
+
+            instruccion.text= "La descarga se realizará de forma automática cuando el paciente presente" +
+            "\n\n\n ritmos irregulares en la monitorización de su corazón. " +
+            "\n\n Presiona H para continuar";
+
+            
+       
+            
+        }else if (indicador ==9)
+        {
+
+            instruccion.text= "Simulación completada, para finalizar presiona el botón H." +
+            "\n\n\n ritmos irregulares en la monitorización de su corazón. " +
+            "\n\n Presiona H para continuar";
+
+            
+       
+            
         }
 
     }
@@ -168,4 +215,30 @@ public class DialogosDesfriManual : MonoBehaviour
         
     
     }
+
+    public void OnHoverEntered(HoverEnterEventArgs args)
+    {
+        
+        if(args.interactable.gameObject.tag == "PerillaOff" && indicador == 5)
+        {
+            perillaManual.SetActive(true);
+            perillaOff.SetActive(false);
+            interfazManual.SetActive(true);
+            PasoNext= true;
+            indicador =6;
+            PasosSiguientes();
+            
+            
+
+            
+            
+
+        }else if (args.interactable.gameObject.tag == "PerillaOff" && indicador == 6)
+        {
+
+
+        }
+    }
+
 }
+

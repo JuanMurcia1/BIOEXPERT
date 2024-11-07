@@ -38,7 +38,7 @@ public class VitalesInstrumentosDesfri : MonoBehaviour
            dialogosDesfriManual.indicador= 4;
            dialogosDesfriManual.PasosSiguientes();
            dialogosDesfriManual.acierto.Play();
-           dialogosDesfriManual.aciertoVisual1.SetActive(true);
+           dialogosDesfriManual.aciertoVisual1.SetActive(false);
            palasMesa.SetActive(false);
            dialogosDesfriManual.PasoNext= true;
 
