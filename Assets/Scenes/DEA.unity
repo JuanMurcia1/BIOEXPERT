@@ -10298,7 +10298,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4a3e11953359fe64783a17e4f1dc2068, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.341583
+      value: 4.424
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4a3e11953359fe64783a17e4f1dc2068, type: 3}
       propertyPath: m_LocalRotation.w
@@ -18004,6 +18004,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be57e187086d02649bc6498d132db9fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tolerance: 0.1
+  deaOriginal: {fileID: 1158708754}
   flecha:
   - {fileID: 2035336117}
   - {fileID: 1348767294}

@@ -6,6 +6,9 @@ using TMPro;
 
 public class DialogoDEA : MonoBehaviour
 {
+    public float tolerance = 0.1f;
+    private Vector3 vector3Monitori;
+    public Transform deaOriginal;
     private AudioSource audioSource;
     public GameObject[] flecha;
     public GameObject DEA2;
@@ -127,6 +130,17 @@ public class DialogoDEA : MonoBehaviour
             {
             indicador = 2;
             }
+        }
+        if (args.interactable.gameObject.tag == "DEA")
+        {
+            vector3Monitori = new Vector3(-4.0f, 2.17f,3.5f);
+
+            if (Vector3.Distance(deaOriginal.position, vector3Monitori) > tolerance)
+            {
+                
+                deaOriginal.position = vector3Monitori;
+            }   
+
         }
         
         
