@@ -6,22 +6,27 @@ using TMPro;
 
 public class DialogoDEA : MonoBehaviour
 {
+    public GameObject colliderDEA3;
+    public int errores;
     public float tolerance = 0.1f;
     private Vector3 vector3Monitori;
     public Transform deaOriginal;
     private AudioSource audioSource;
     public GameObject[] flecha;
     public GameObject DEA2;
+    public GameObject DEA3;
     public GameObject correctPlace;
     public GameObject perillaOff;
     public GameObject perillaDEA;
     public Desfibrilador dea;
     public TextMeshProUGUI instruccion;
-    private int indicador;
+    public int indicador;
     private bool PasoNext;
+    
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        errores = 2;
         instruccion.fontSize = 70;
         instruccion.alignment = TextAlignmentOptions.Center;
         PasoNext = true;
@@ -37,7 +42,9 @@ public class DialogoDEA : MonoBehaviour
         actualizacionIndicador();
 
         
-        PasosSiguientes();
+        if (indicador <9){
+            PasosSiguientes();
+         }
         
         
        
@@ -67,6 +74,7 @@ public class DialogoDEA : MonoBehaviour
                 indicador++;
                 Debug.Log(indicador);
                 flecha[0].SetActive(false);
+                
             }
 
         }else if (indicador ==5)
@@ -81,7 +89,38 @@ public class DialogoDEA : MonoBehaviour
             }
         }else if(indicador ==6)
         {
-            instruccion.text = "Muy bien, ahora vamos a esperar a que el monitor analice el estado del paciente para saber si es necesaria una descarga electrica.";
+            instruccion.text = "Muy bien, ahora vamos a esperar a que el monitor analice el estado del paciente para saber si es necesaria una descarga electrica.\n\n presiona H para continuar.";
+
+            PasoNext=true;
+
+        }else if(indicador == 7){
+
+            instruccion.text = "El análisis automático determinó que es necesaria una descarga eléctrica, recuerda evitar cualquier contacto físico con el paciente una vez se vaya a inciar la descarga eléctrica. \n\n presiona H para continuar.";
+
+        }else if(indicador == 8){
+
+            instruccion.text = "Felicidades ahora puedes tomar la simulación independiente de el DEA. \n\n presiona H para continuar";
+            
+        }else if(indicador == 9){
+            Debug.Log(indicador);
+            PasoNext = false;
+            instruccion.text = "El DEA no está funcionando correctamente señala qué cosas están mal para arreglarlo, ¡Apresúrate!. \n\n errores: "+errores;
+
+            if (perillaDEA.activeSelf && errores ==2){
+                perillaOff.SetActive(true);
+                perillaDEA.SetActive(false);
+            }
+            
+            
+            if (DEA2.activeSelf && errores ==2){
+                DEA2.SetActive(false);
+                DEA3.SetActive(true);
+            }
+            
+
+
+            
+
         }else if(indicador == 100){
 
             instruccion.text = "Un DEA es un tipo de desfibrilador computarizado que analiza automáticamente el ritmo cardiaco en personas que están sufriendo un paro. Cuando sea necesario, envía una descarga eléctrica al corazón para normalizar su ritmo.  La conversión de una arritmia ventricular a su ritmo normal mediante una descarga eléctrica se denomina desfibrilación.";
@@ -104,10 +143,40 @@ public class DialogoDEA : MonoBehaviour
 
          if(args.interactable.gameObject.tag == "PerillaOff" && indicador == 5){
 
-            Debug.Log("OnHover detectado");
             perillaDEA.SetActive(true);
             perillaOff.SetActive(false);
          }
+
+         if(args.interactable.gameObject.tag == "PerillaOff" && indicador == 9){
+
+            perillaDEA.SetActive(true);
+            perillaOff.SetActive(false);
+            audioSource.Play();
+
+            if (DEA2.activeSelf){
+                errores = 0;
+            } else{
+                errores = 1;
+            }
+            PasosSiguientes();
+
+
+         }else if(args.interactable.gameObject.tag == "DEA" && indicador == 9){
+
+            DEA2.SetActive(true);
+            DEA3.SetActive(false);
+            colliderDEA3.SetActive(false);
+            audioSource.Play();
+
+            if (perillaDEA.activeSelf){
+                errores = 0;
+            } else{
+                errores = 1;
+            }
+            PasosSiguientes();
+            
+         }
+         
         
     }
 
