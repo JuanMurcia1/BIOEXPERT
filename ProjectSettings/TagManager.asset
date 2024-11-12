@@ -22,6 +22,10 @@ TagManager:
   - Palas
   - PalasMesa
   - PerillaManual
+  - Raton
+  - ConfirmEnergia
+  - AllowGuiada
+  - ConectorIndependiente
   layers:
   - Default
   - TransparentFX

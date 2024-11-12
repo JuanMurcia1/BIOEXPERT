@@ -46,21 +46,7 @@ public class VitalesInstrumentosDesfri : MonoBehaviour
            
 
         }   
-        // }else if (gameObject.CompareTag("PalasMesa") && collision.gameObject.CompareTag("Desfibrilador") && dialogosDesfriManual.indicador ==4)
-        // {
-
-        //    palasMesa.SetActive(false);
-        //    conectorPalasDea.SetActive(true);
-        //    dialogosDesfriManual.flechaPalas.SetActive(false);
-        //    dialogosDesfriManual.indicador= 5;
-        //    dialogosDesfriManual.acierto.Play();
-        //    dialogosDesfriManual.aciertoVisual1.SetActive(false);
-        //    dialogosDesfriManual.aciertoVisual2.SetActive(true);
-
-           
-           
-            
-        // }
+    
     }
 
 }

@@ -7,6 +7,7 @@ using TMPro;
 public class DialogosDesfriManual : MonoBehaviour
 {
     public TextMeshProUGUI instruccion;
+    public TextMeshProUGUI tiempo;
     public GameObject perillaOff;
     public GameObject perillaManual;
     public Desfibrilador desfibrilador;
@@ -17,6 +18,8 @@ public class DialogosDesfriManual : MonoBehaviour
     private Vector3 vector3DEA;
     public int indicador = 0;
     public GameObject interfazPrincipal;
+    public GameObject interfazDismiCarga;
+    public GameObject interfazConfirmacion;
     public GameObject flechaPalas;
     public GameObject flechaDea;
     public AudioSource acierto;
@@ -25,18 +28,36 @@ public class DialogosDesfriManual : MonoBehaviour
     public  bool PasoNext;
     public GameObject interfazManual;
     public VitalesInstrumentosDesfri vitalesInstrumentosDesfri;
+    public Light lightRaton;
+    public Light lightBotonConfirm;
+    private bool finGuiada;
+    public GameObject interfaceFinalización;
+    public GameObject interfaceCanvaFlotante;
+    public int errroresRest = 2;
+    public GameObject conectorIndependiente;
+    public GameObject conectorPalasDea;
+    public float startTime;
+     private bool isTimerRunning = false;
+    
     // Start is called before the first frame update
     void Start()
     {
         PasosSiguientes();
         acierto = GetComponent<AudioSource>();
         PasoNext= true;
+        lightRaton.enabled= false;
+        lightBotonConfirm.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         actualizacionIndicador();
+        if (isTimerRunning)
+        {
+            float currentTime = Time.time - startTime;
+            UpdateTimeText(currentTime);
+        }
     }
 
     public void PasosSiguientes()
@@ -67,8 +88,6 @@ public class DialogosDesfriManual : MonoBehaviour
             desfibrilador.lightDEA.enabled = true;
             PasoNext= false;
 
-           
-            
         
         }else if (indicador ==4)
         {
@@ -94,43 +113,99 @@ public class DialogosDesfriManual : MonoBehaviour
             "\n\n Interactua Con la perilla de ratón, resaltada en azúl, para disminuir la energía " +
             "Esto nos permite elegir la energía que posteriormente se descargará sobre el paciente.";
 
-            
-
-            
        
             
         }else if (indicador ==7)
         {
 
-            instruccion.text= "Procesos de descarga automática" +
+            instruccion.text= "!Bien hecho!, energía reducida. "+ "\n\n Proceso de descarga automática" +
             "\n\n Interactua con el botón de confirmación resaltado en azúl para establecer la energía. ";
-
-            
+            lightRaton.enabled= false;
+            lightBotonConfirm.enabled= true;
        
             
         }else if (indicador ==8)
         {
 
             instruccion.text= "La descarga se realizará de forma automática cuando el paciente presente" +
-            "\n\n\n ritmos irregulares en la monitorización de su corazón. " +
+            " ritmos irregulares en la monitorización de su corazón. " +
             "\n\n Presiona H para continuar";
-
-            
        
             
         }else if (indicador ==9)
         {
 
             instruccion.text= "Simulación completada, para finalizar presiona el botón H." +
-            "\n\n\n ritmos irregulares en la monitorización de su corazón. " +
             "\n\n Presiona H para continuar";
-
+            
+        }else if (indicador ==10)
+        {
+            interfaceCanvaFlotante.SetActive(false);
+            interfaceFinalización.SetActive(true);
+            PasoNext=false;
             
        
             
+        }else if (indicador ==11)
+        {
+           
+            conectorPalasDea.SetActive(false);
+            conectorIndependiente.SetActive(true);
+            
+            interfaceCanvaFlotante.SetActive(true);
+            interfaceFinalización.SetActive(false);
+            instruccion.text= "!Algo anda mal¡, el monitor parece no tener lecturas de la interfaz DEA" +
+            " y necesitamos confirmar la carga de desfibrilación para el paciente, apresúrate y arréglalo" +
+            " \n\n\n Errores restantes: " +errroresRest;
+            StartTimer();
+             if (isTimerRunning)
+        {
+            float currentTime = Time.time - startTime;
+            UpdateTimeText(currentTime);
+        }
+            
+            
+       
+            
+        }else if (indicador ==12)
+        {
+            
+            
+            instruccion.text= "!Algo anda mal¡, el monitor parece no tener lecturas de la interfaz DEA" +
+            " y necesitamos confirmar la carga de desfibrilación para el paciente, apresúrate y arréglalo" +
+            " \n\n\n Errores restantes: " +errroresRest;
+            
+        }
+        else if (indicador==13)
+        {
+                  
+            instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas y está listo para una desfibrilación si se requiere.!";
+             StopTimer();   
         }
 
     }
+
+     private void StartTimer()
+    {
+        startTime = Time.time;
+        isTimerRunning = true;
+    }
+
+    private void StopTimer()
+    {
+        if (isTimerRunning)
+        {
+            float endTime = Time.time - startTime;
+            UpdateTimeText(endTime);
+            isTimerRunning = false;
+        }
+    }
+
+    private void UpdateTimeText(float currentTime)
+    {
+        tiempo.text = "Tiempo: " + currentTime.ToString("F2") + "Seg";
+    }
+
     public void actualizacionIndicador()
     {
         if(Input.GetKeyDown(KeyCode.H) && PasoNext== true)
@@ -138,8 +213,13 @@ public class DialogosDesfriManual : MonoBehaviour
             indicador ++;
             PasosSiguientes();
             
-        }
-        
+        }// }else if(Input.GetKeyDown(KeyCode.H) && finGuiada== true)
+        // {
+        //     indicador ++;
+        //     PasosSiguientes();
+            
+        // }
+
     }
 
     public void aperturaInterfaz()
@@ -176,7 +256,6 @@ public class DialogosDesfriManual : MonoBehaviour
 
 
 
-
     public void OnSelectExited(SelectExitEventArgs args)
     {
         
@@ -208,12 +287,6 @@ public class DialogosDesfriManual : MonoBehaviour
         }   
         }
 
-        
-        
-
-        
-        
-    
     }
 
     public void OnHoverEntered(HoverEnterEventArgs args)
@@ -224,21 +297,65 @@ public class DialogosDesfriManual : MonoBehaviour
             perillaManual.SetActive(true);
             perillaOff.SetActive(false);
             interfazManual.SetActive(true);
-            PasoNext= true;
+            PasoNext= false;
             indicador =6;
             PasosSiguientes();
-            
-            
+            lightRaton.enabled = true;
+        
 
-            
-            
-
-        }else if (args.interactable.gameObject.tag == "PerillaOff" && indicador == 6)
+        }else if (args.interactable.gameObject.tag == "Raton" && indicador == 6)
         {
+            PasoNext=false;
+            interfazManual.SetActive(false);
+            interfazDismiCarga.SetActive(true);
+            indicador = 7;
+            PasosSiguientes();
 
+
+        }else if (args.interactable.gameObject.tag == "ConfirmEnergia" && indicador == 7)
+        {
+            interfazDismiCarga.SetActive(false);
+            interfazConfirmacion.SetActive(true);    
+            indicador = 8;
+            PasosSiguientes();
+            lightBotonConfirm.enabled=false;
+            PasoNext= true;
+            
+
+        }else if (args.interactable.gameObject.tag == "AllowGuiada" && indicador == 10)
+        {
+            interfazDismiCarga.SetActive(false);
+            interfazConfirmacion.SetActive(false);    
+            indicador = 11;
+            PasosSiguientes();
+            StartTimer();
+            
+
+        }else if (args.interactable.gameObject.tag == "ConectorIndependiente" && indicador == 11)
+        {
+            conectorIndependiente.SetActive(false);
+            conectorPalasDea.SetActive(true);
+            interfazDismiCarga.SetActive(true);
+            errroresRest --;
+            indicador=12;
+            PasosSiguientes();
+            acierto.Play();
+
+
+        }else if (args.interactable.gameObject.tag == "ConfirmEnergia" && indicador == 12)
+        {
+            interfazDismiCarga.SetActive(false);
+            interfazConfirmacion.SetActive(true);
+            indicador=13;
+            errroresRest --;
+            PasosSiguientes();
+            acierto.Play();
 
         }
+        
     }
 
 }
+
+
 
