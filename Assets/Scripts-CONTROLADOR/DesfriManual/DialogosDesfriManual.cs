@@ -37,7 +37,9 @@ public class DialogosDesfriManual : MonoBehaviour
     public GameObject conectorIndependiente;
     public GameObject conectorPalasDea;
     public float startTime;
-     private bool isTimerRunning = false;
+    private bool isTimerRunning = false;
+    public GameObject panelCodigo;
+    private bool codeOn = false;
     
     // Start is called before the first frame update
     void Start()
@@ -58,6 +60,7 @@ public class DialogosDesfriManual : MonoBehaviour
             float currentTime = Time.time - startTime;
             UpdateTimeText(currentTime);
         }
+        panelCode();
     }
 
     public void PasosSiguientes()
@@ -179,8 +182,10 @@ public class DialogosDesfriManual : MonoBehaviour
         else if (indicador==13)
         {
                   
-            instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas y está listo para una desfibrilación si se requiere.!";
+            instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas y está listo para una desfibrilación si se requiere.!"+
+            "\n\nPresiona H para compartir los resultados";
              StopTimer();   
+            codeOn=true;
         }
 
     }
@@ -206,6 +211,16 @@ public class DialogosDesfriManual : MonoBehaviour
         tiempo.text = "Tiempo: " + currentTime.ToString("F2") + "Seg";
     }
 
+    public void panelCode()
+    {
+        if(Input.GetKeyDown(KeyCode.H) && codeOn== true)
+        {
+            panelCodigo.SetActive(true);
+            interfaceCanvaFlotante.SetActive(false);
+
+        }
+    }
+
     public void actualizacionIndicador()
     {
         if(Input.GetKeyDown(KeyCode.H) && PasoNext== true)
@@ -213,12 +228,7 @@ public class DialogosDesfriManual : MonoBehaviour
             indicador ++;
             PasosSiguientes();
             
-        }// }else if(Input.GetKeyDown(KeyCode.H) && finGuiada== true)
-        // {
-        //     indicador ++;
-        //     PasosSiguientes();
-            
-        // }
+        }
 
     }
 

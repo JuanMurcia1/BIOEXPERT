@@ -84,6 +84,7 @@ public class VitalesInstrumentos : MonoBehaviour
            dialogoSignos.indicador= 7;
            dialogoSignos.acierto.Play();
            dialogoSignos.aciertoVisual3.SetActive(true);
+           dialogoSignos.PasosSiguientes();
 
            
            

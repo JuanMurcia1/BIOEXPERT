@@ -7,6 +7,7 @@ using TMPro;
 public class DialogoSignos : MonoBehaviour
 {
     public TextMeshProUGUI instruccion;
+    public TextMeshProUGUI tiempo;
     public GameObject flechaMonitori;
     public GameObject flechaSPO2;
     public GameObject flechaPresion;
@@ -23,6 +24,8 @@ public class DialogoSignos : MonoBehaviour
     public GameObject InterfazSignosCompleta;
     public Light BotonInvas;
     public GameObject interfazPrincipal;
+    public GameObject interfaceFinalización;
+    public GameObject interfaceCanvaFlotante;
 
     public AudioSource acierto;
     public GameObject aciertoVisual1;
@@ -38,6 +41,11 @@ public class DialogoSignos : MonoBehaviour
     public bool error1 = false;
     public bool error2 = false;
     public bool PasoNext;
+     public float startTime;
+    private bool isTimerRunning = false;
+    private bool boolcito= false;
+    public GameObject panelCodigo;
+    
    
 
 
@@ -61,8 +69,14 @@ public class DialogoSignos : MonoBehaviour
         aperturaInterfaz();
        if(indicador>=4)
        {
-        PasosSiguientes();
+        
        } 
+
+        if (isTimerRunning)
+        {
+            float currentTime = Time.time - startTime;
+            UpdateTimeText(currentTime);
+        }
     }
 
     public void PasosSiguientes()
@@ -144,7 +158,7 @@ public class DialogoSignos : MonoBehaviour
             
 
             BotonInvas.enabled = true;
-            PasoNext=false;
+            
             
             
         } else if (indicador ==10)
@@ -153,38 +167,72 @@ public class DialogoSignos : MonoBehaviour
             " en segundo nivel, la pulxiometría y por último la toma de la presión"+ 
             "\n\n Simulación completada, para finalizar presiona el botón H ";
             BotonInvas.enabled = false;
+            PasoNext = true;
+
 
         }else if (indicador ==11)
         {
             instruccion.text="Felicidades, ahora puedes tomar la simulación independiente de signosVitales" +
-            "\n\n Presiona J para abrir la interfaz y acceder al módulo independiente de signosvitales.";
-        }else if (indicador==12)
+            "\n\n Presiona H para abrir la interfaz de finalización y acceder al módulo independiente de signosvitales.";
+            
+        }else if (indicador ==12)
         {
+            interfaceCanvaFlotante.SetActive(false);
+            interfaceFinalización.SetActive(true);
+            PasoNext= false;
+            boolcito= true;
+             
+        }
+        else if (indicador==13)
+        {
+        
             instruccion.text="!Algo anda mal¡, no tenemos lecturas en el monitor y" +
             "\n\n la monitorización debe ser constante, apresúrate y arréglalo." +
             " \n\n\n Errores restantes: " +errroresRest;
+
+            if (boolcito == true)
+            {
+            interfaceCanvaFlotante.SetActive(true);
+            interfaceFinalización.SetActive(false);
             perillaSignos.SetActive(false);
             perillaRight.SetActive(true);
             conectorRight.SetActive(true);
             InterfazSignosCompleta.SetActive(false);
-            
             vitalesInstrumentos.presionDesfri.SetActive(false);
             cableSignosIndependiente.SetActive(true);
             StartCoroutine(CambiarTexto(1));
+            StartTimer();
+                if (isTimerRunning)
+            {
+                float currentTime = Time.time - startTime;
+                 UpdateTimeText(currentTime);
+            }
 
-        }else if (indicador==13)
+            }
+            boolcito= false;
+
+
+            
+
+    
+
+        }else if (indicador==14)
         {
             instruccion.text="!Algo anda mal¡, no tenemos lecturas en el monitor y" +
             "\n\n la monitorización debe ser constante, apresúrate y arréglalo." +
-            " \n\n\n Errores restantes: " +errroresRest;            
+            " \n\n\n Errores restantes: " +errroresRest;       
             
             
           
 
-        }else if (indicador==14)
+        }else if (indicador==15)
         {
                   
-            instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas de nuevo!";
+            instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas de nuevo.!"
+            + "\n\nPresiona H para compartir los resultados";
+            StopTimer(); 
+            panelCodigo.SetActive(true);
+            interfaceCanvaFlotante.SetActive(false);
             
           
 
@@ -197,6 +245,28 @@ public class DialogoSignos : MonoBehaviour
 
 
     }
+
+    private void StartTimer()
+    {
+        startTime = Time.time;
+        isTimerRunning = true;
+    }
+
+    private void StopTimer()
+    {
+        if (isTimerRunning)
+        {
+            float endTime = Time.time - startTime;
+            UpdateTimeText(endTime);
+            isTimerRunning = false;
+        }
+    }
+
+    private void UpdateTimeText(float currentTime)
+    {
+        tiempo.text = "Tiempo: " + currentTime.ToString("F2") + "Seg";
+    }
+
 
     public void actualizacionIndicador()
     {
@@ -253,6 +323,14 @@ public class DialogoSignos : MonoBehaviour
         {
             instruccion.text = "Acerca la interfaz arterial en donde te indica la flecha";
             
+        }else if (args.interactable.gameObject.tag == "AllowGuiada" && indicador == 12)
+        {
+              
+            indicador = 13;
+            PasosSiguientes();
+            StartTimer();
+            
+
         }
     }
 
@@ -308,8 +386,8 @@ public class DialogoSignos : MonoBehaviour
             perillaSignos.SetActive(true);
             perillaOff.SetActive(false);
             InterfazSignos.SetActive(true);
-            PasoNext= true;
             indicador =9;
+            PasosSiguientes();
             
             
 
@@ -326,23 +404,28 @@ public class DialogoSignos : MonoBehaviour
            
             InterfazSignosCompleta.SetActive(true);
             InterfazSignos.SetActive(false);
-            PasoNext= true;
+            
             indicador=10;
+            PasosSiguientes();
         } else if (args.interactable.gameObject.tag == "signosIndependiente" && indicador ==13)
         {
             errroresRest --;
+            
             
             error1= true;
             cableSignosIndependiente.SetActive(false);
             vitalesInstrumentos.presionDesfri.SetActive(true);
             acierto.Play();
+            PasosSiguientes();
+            
             
 
             if(error1== true & error2==true)
             {
-                indicador=14;
+                indicador=15;
                 InterfazSignosCompleta.SetActive(true);
                 InterfazSignos.SetActive(false);
+                PasosSiguientes();
             }
            
            
@@ -351,33 +434,26 @@ public class DialogoSignos : MonoBehaviour
         }else if (args.interactable.gameObject.tag == "PerillaRight" && indicador ==13 )
         {
             errroresRest --;
+            boolcito= false;
             
             error2 = true;
             perillaRight.SetActive(false);
             perillaSignos.SetActive(true);
             InterfazSignos.SetActive(true);
             acierto.Play();
+            PasosSiguientes();
             
              if(error1 == true & error2 ==true)
             {
                 
-                indicador =14;
+                indicador =15;
                 InterfazSignosCompleta.SetActive(true);
                 InterfazSignos.SetActive(false);
                 acierto.Play();
+                PasosSiguientes();
 
             }
 
-
-
-            
-
-            
-            
-
-           
-            
-            
         }
         
 
