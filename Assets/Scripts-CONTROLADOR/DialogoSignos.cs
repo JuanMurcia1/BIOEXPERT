@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
+using UnityEngine.XR;
 
 public class DialogoSignos : MonoBehaviour
 {
+
     public TextMeshProUGUI instruccion;
     public TextMeshProUGUI tiempo;
     public GameObject flechaMonitori;
@@ -47,7 +49,7 @@ public class DialogoSignos : MonoBehaviour
     public GameObject panelCodigo;
     
    
-
+    private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
 
 
     public int indicador;
@@ -275,6 +277,29 @@ public class DialogoSignos : MonoBehaviour
             indicador ++;
             PasosSiguientes();
         }
+
+        // Detectar el botón B del mando derecho
+    UnityEngine.XR.InputDevice rightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
+    bool buttonBPressed;
+    if (rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out buttonBPressed))
+    {
+        if (buttonBPressed && !buttonBWasPressed && PasoNext)
+        {
+            // Solo incrementar cuando se detecta el inicio del botón presionado
+            indicador++;
+            PasosSiguientes();
+            Debug.Log(indicador);
+            Debug.Log("Botón B presionado.");
+        }
+        // Actualizar la bandera para evitar múltiples detecciones
+        buttonBWasPressed = buttonBPressed;
+    }
+    else
+    {
+        // Reiniciar la bandera cuando el botón no está presionado
+        buttonBWasPressed = false;
+    }
         
     }
 
