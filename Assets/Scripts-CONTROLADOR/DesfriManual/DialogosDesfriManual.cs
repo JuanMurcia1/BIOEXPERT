@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
+using UnityEngine.XR;
 
 public class DialogosDesfriManual : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class DialogosDesfriManual : MonoBehaviour
     private bool isTimerRunning = false;
     public GameObject panelCodigo;
     private bool codeOn = false;
+    private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
     
     // Start is called before the first frame update
     void Start()
@@ -228,6 +230,28 @@ public class DialogosDesfriManual : MonoBehaviour
             indicador ++;
             PasosSiguientes();
             
+        }
+
+        UnityEngine.XR.InputDevice rightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
+        bool buttonBPressed;
+        if (rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out buttonBPressed))
+        {
+            if (buttonBPressed && !buttonBWasPressed && PasoNext)
+            {
+                // Solo incrementar cuando se detecta el inicio del botón presionado
+                indicador++;
+                PasosSiguientes();
+                Debug.Log(indicador);
+                Debug.Log("Botón B presionado.");
+            }
+            // Actualizar la bandera para evitar múltiples detecciones
+            buttonBWasPressed = buttonBPressed;
+        }
+        else
+        {
+            // Reiniciar la bandera cuando el botón no está presionado
+            buttonBWasPressed = false;
         }
 
     }
