@@ -38,6 +38,7 @@ TagManager:
   - 0
   - borrar
   - enviar
+  - perillaMarcapasos
   layers:
   - Default
   - TransparentFX

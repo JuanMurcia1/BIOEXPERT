@@ -45,9 +45,7 @@ public class VitalesInstrumentos : MonoBehaviour
          monitoriR.SetActive(false);
          dialogoSignos.indicador= 5;
          dialogoSignos.flechaMonitori.SetActive(false);
-         dialogoSignos.flechaSPO2.SetActive(true);
-          
-         Debug.Log(dialogoSignos.indicador);
+       
          desfibrilador.lightSPO2.enabled = true;
          dialogoSignos.aciertoVisual1.SetActive(true);
          dialogoSignos.acierto.Play();
