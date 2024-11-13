@@ -12,7 +12,6 @@ public class ColliderAction : MonoBehaviour
         if (objectToActivate != null)
         {
             audioSource = objectToActivate.GetComponent<AudioSource>();
-            Debug.Log("Audio Existe");
         }
     }
 

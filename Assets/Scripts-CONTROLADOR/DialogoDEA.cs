@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class DialogoDEA : MonoBehaviour
 {
+    private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
+    private  XRControls controls;
     public GameObject colliderDEA3;
     public int errores;
     public float tolerance = 0.1f;
@@ -22,10 +26,33 @@ public class DialogoDEA : MonoBehaviour
     public TextMeshProUGUI instruccion;
     public int indicador;
     private bool PasoNext;
+
+    public GameObject videoDEA;
+    private bool isRunning; // Estado del temporizador
+    public float elapsedTime = 0f; // Tiempo acumulado
     
     // Start is called before the first frame update
+     void Awake()
+    {
+        controls = new XRControls();
+    }
+
+    void OnEnable()
+    {
+        controls.Controllers.AdvanceStep.performed += OnAdvanceStepPerformed;
+        controls.Enable();
+        Debug.Log($"Binding Path: {controls.Controllers.AdvanceStep.bindings[0].path}");
+    }
+
+
+    void OnDisable()
+    {
+        controls.Controllers.AdvanceStep.performed -= OnAdvanceStepPerformed;
+        controls.Disable();
+    }
     void Start()
     {   
+        isRunning = false;
         errores = 2;
         instruccion.fontSize = 70;
         instruccion.alignment = TextAlignmentOptions.Center;
@@ -45,9 +72,59 @@ public class DialogoDEA : MonoBehaviour
         if (indicador <9){
             PasosSiguientes();
          }
+
+
+
+        if (indicador == 9 && !isRunning && errores == 2)
+        {
+            StartTimer();
+        }
+        // Verifica si el indicador es igual a 0 para detener el temporizador
+        else if (errores == 0 && isRunning)
+        {
+            StopTimer();
+            isRunning= false;
+            indicador = 10;
+            PasosSiguientes();
+        }
+
+        // Si el temporizador está corriendo, acumula el tiempo y actualiza el texto
+        if (isRunning)
+        {
+            elapsedTime += Time.deltaTime;
+            PasosSiguientes();
+        }
+    
+
+
+         
         
         
        
+    }
+
+    void StartTimer()
+    {
+        isRunning = true; // Inicia el temporizador
+        elapsedTime = 0f; // Reinicia el contador
+        PasosSiguientes(); // Actualiza el texto
+        Debug.Log("Temporizador iniciado.");
+    }
+
+    void StopTimer()
+    {
+        isRunning = false; // Detiene el temporizador
+        PasosSiguientes(); // Actualiza el texto
+        Debug.Log($"Temporizador detenido. Tiempo total: {elapsedTime} segundos.");
+    }
+    private void OnAdvanceStepPerformed(InputAction.CallbackContext context)
+    {
+        if (PasoNext)
+        {
+            
+            indicador++;
+            PasosSiguientes();
+        }
     }
      public void PasosSiguientes()
     {
@@ -90,12 +167,14 @@ public class DialogoDEA : MonoBehaviour
         }else if(indicador ==6)
         {
             instruccion.text = "Muy bien, ahora vamos a esperar a que el monitor analice el estado del paciente para saber si es necesaria una descarga electrica.\n\n presiona H para continuar.";
+            videoDEA.SetActive(true);
 
             PasoNext=true;
 
         }else if(indicador == 7){
 
             instruccion.text = "El análisis automático determinó que es necesaria una descarga eléctrica, recuerda evitar cualquier contacto físico con el paciente una vez se vaya a inciar la descarga eléctrica. \n\n presiona H para continuar.";
+            videoDEA.SetActive(false);
 
         }else if(indicador == 8){
 
@@ -104,7 +183,7 @@ public class DialogoDEA : MonoBehaviour
         }else if(indicador == 9){
             Debug.Log(indicador);
             PasoNext = false;
-            instruccion.text = "El DEA no está funcionando correctamente señala qué cosas están mal para arreglarlo, ¡Apresúrate!. \n\n errores: "+errores;
+            instruccion.text = "El DEA no está funcionando correctamente señala qué cosas están mal para arreglarlo, ¡Apresúrate!. \n\n errores: "+errores+$"\n\nTiempo: {elapsedTime:F1} segundos";
 
             if (perillaDEA.activeSelf && errores ==2){
                 perillaOff.SetActive(true);
@@ -121,22 +200,52 @@ public class DialogoDEA : MonoBehaviour
 
             
 
+        }else if(indicador == 10){
+
+            instruccion.text = $"Felicidades haz terminado la simulación independiente de el DEA. \n\n con un tiempo de: {elapsedTime:F1} segundos";
+            
         }else if(indicador == 100){
 
             instruccion.text = "Un DEA es un tipo de desfibrilador computarizado que analiza automáticamente el ritmo cardiaco en personas que están sufriendo un paro. Cuando sea necesario, envía una descarga eléctrica al corazón para normalizar su ritmo.  La conversión de una arritmia ventricular a su ritmo normal mediante una descarga eléctrica se denomina desfibrilación.";
         }
     }
 
-    public void actualizacionIndicador()
+    
+
+public void actualizacionIndicador()
+{
+    // Detectar la tecla H como antes
+    if (Input.GetKeyDown(KeyCode.H) && PasoNext)
     {
-        if(Input.GetKeyDown(KeyCode.H) && PasoNext== true)
+        indicador++;
+        PasosSiguientes();
+        Debug.Log(indicador);
+    }
+
+    // Detectar el botón B del mando derecho
+    UnityEngine.XR.InputDevice rightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+
+    bool buttonBPressed;
+    if (rightHandDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out buttonBPressed))
+    {
+        if (buttonBPressed && !buttonBWasPressed && PasoNext)
         {
-            indicador ++;
+            // Solo incrementar cuando se detecta el inicio del botón presionado
+            indicador++;
             PasosSiguientes();
             Debug.Log(indicador);
+            Debug.Log("Botón B presionado.");
         }
-        
+        // Actualizar la bandera para evitar múltiples detecciones
+        buttonBWasPressed = buttonBPressed;
     }
+    else
+    {
+        // Reiniciar la bandera cuando el botón no está presionado
+        buttonBWasPressed = false;
+    }
+}
+
 
     public void OnHoverEntered(HoverEnterEventArgs args)
     {

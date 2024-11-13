@@ -1,0 +1,34 @@
+{
+    "name": "XRControls",
+    "maps": [
+        {
+            "name": "Controllers",
+            "id": "40d6d9bd-7e28-40f0-abfa-6d3c6808c83e",
+            "actions": [
+                {
+                    "name": "AdvanceStep",
+                    "type": "Button",
+                    "id": "f4c159da-cfe8-4b40-8ead-97a717088ceb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c5632115-b132-4623-8ca7-f3360c41be84",
+                    "path": "<XRController>{RightHand}/primaryButton ",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AdvanceStep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
