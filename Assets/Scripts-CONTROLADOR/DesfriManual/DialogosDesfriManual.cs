@@ -155,8 +155,8 @@ public class DialogosDesfriManual : MonoBehaviour
         }else if (indicador ==9)
         {
 
-            instruccion.text= "Simulación completada, para finalizar presiona el botón H." +
-            "\n\n Presiona H para continuar";
+            instruccion.text= "Simulación completada, para finalizar presiona el botón B.";
+            
             
         }else if (indicador ==10)
         {

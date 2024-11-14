@@ -32,12 +32,12 @@ public class SendCodigo : MonoBehaviour
     {
         if (code.Length > 0)
         {
-            char firstDigit = code[0];  // Obtiene el primer dígito del código
+            char firstDigit = code[0];  
 
             switch (firstDigit)
             {
                 case '1':
-                    SceneManager.LoadScene("DesfriManual");  // Carga la escena DesfriManual
+                    SceneManager.LoadScene("DesfriManual");  
                     break;
                 case '2':
                     SceneManager.LoadScene("SignosVitales");  // Carga la escena SignosVitales

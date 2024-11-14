@@ -4,9 +4,18 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
 using UnityEngine.XR;
+using System;
+using UnityEngine.Networking;
 
 public class DialogoMarcapasos : MonoBehaviour
 {
+    [System.Serializable]
+    public class Datos
+    {
+    public string presentationDateTime;
+    public int score;
+    public int completionTime;
+    }
     private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
     public float tolerance = 0.1f;
     private Vector3 vector3Monitori;
@@ -22,15 +31,29 @@ public class DialogoMarcapasos : MonoBehaviour
     public GameObject aciertoVisual2;
     public GameObject perillaOff;
     public GameObject perillaMarcapasos;
+    public GameObject interfaceFinalización;
+    public GameObject interfaceCanvaFlotante;
 
     public GameObject interfazMarcapasos;
+    public GameObject interfazmarcaAumentaE;
+    public GameObject interfazMarcaEntrega;
     
    public Light lightRaton;
    public Light lightBotonConfirm;
+   public int errroresRest = 2;
 
     public TextMeshProUGUI instruccion;
+    public TextMeshProUGUI tiempo;
     public int indicador;
     public bool PasoNext;
+    public string presentationDateTime;
+    public int score;        
+    public int completionTime;
+    public float startTime;
+    private bool isTimerRunning = false;
+    private bool codeOn = false;
+    public GameObject panelCodigo;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +70,12 @@ public class DialogoMarcapasos : MonoBehaviour
     {
         
         actualizacionIndicador();
+        if (isTimerRunning)
+        {
+            float completionTime = Time.time - startTime;
+            UpdateTimeText(completionTime);
+        }
+        panelCode();
         
         
        
@@ -101,7 +130,101 @@ public class DialogoMarcapasos : MonoBehaviour
             "Esto permitirá encender el desfibrilador y mostrar la interfaz correspondiente al módulo elegido.";
 
             PasoNext = false;
+        }else if (indicador ==8)
+        {
+
+           instruccion.text= "!Bien hecho!." + "\n\nAumento de energía" +
+            "\n\n Interactua Con la perilla de ratón, resaltada en azúl, para aumentar la energía " +
+            "Esto nos permite elegir la energía que posteriormente empleara el marcapasos.";
+
+            
+        }else if (indicador ==9)
+        {
+
+           instruccion.text= "!Bien hecho!, energía aumentada. "+ "\n\n Proceso entrega energía" +
+            "\n\n Interactua con el botón de confirmación resaltado en azúl para entregar la energía. ";
+
+            
+        }else if (indicador ==10)
+        {
+
+           instruccion.text= "La descarga se realizará de forma automática y constante para lograr mantener" +
+            " ritmos regulares en la monitorización. " +
+            "\n\n Presiona H para continuar";
+
+            
+        }else if (indicador ==11)
+        {
+
+            instruccion.text= "Simulación completada, para finalizar presiona el botón B.";
+            
+            
+        }else if (indicador ==12)
+        {
+            interfaceCanvaFlotante.SetActive(false);
+            interfaceFinalización.SetActive(true);
+            PasoNext=false;
+            
+       
+            
+        }else if (indicador ==13)
+        {
+           
+            
+            interfaceCanvaFlotante.SetActive(true);
+            interfaceFinalización.SetActive(false);
+            instruccion.text= "!Algo anda mal¡, el monitor parece no tener lecturas de la interfaz Marcapasos" +
+            " y necesitamos confirmar la carga de desfibrilación para el paciente, apresúrate y arréglalo" +
+            " \n\n\n Errores restantes: " +errroresRest;
+            StartTimer();
+             if (isTimerRunning)
+              {
+                completionTime = Mathf.RoundToInt(Time.time - startTime);
+                UpdateTimeText(completionTime);
+                }
+            GetCurrentDateTime();                
+            
+            
+       
+            
         }
+    }
+
+    void GetCurrentDateTime()
+    {
+        presentationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"); // Guarda la fecha y hora actual
+        Debug.Log("Fecha y Hora guardadas: " + presentationDateTime.ToString());
+    }
+
+     private void StartTimer()
+    {
+        startTime = Time.time;
+        isTimerRunning = true;
+    }
+
+    public void StopTimer()
+    {
+        if (isTimerRunning) // Verifica si el temporizador está activo
+        {
+            float elapsedTime = Time.time - startTime; // Calcula el tiempo transcurrido
+            completionTime = (int)elapsedTime; // Convierte a segundos enteros y guarda en completionTime
+            isTimerRunning = false; // Desactiva el temporizador
+            Debug.Log("Tiempo completado: " + completionTime + " segundos.");
+        }
+    }
+    public void panelCode()
+    {
+        if(Input.GetKeyDown(KeyCode.H) && codeOn== true)
+        {
+            panelCodigo.SetActive(true);
+            interfaceCanvaFlotante.SetActive(false);
+
+        }
+    }
+
+    private void UpdateTimeText(float completionTime)
+    {
+        tiempo.text = "Tiempo: " + completionTime.ToString("F2") + "Seg";
     }
 
     public void actualizacionIndicador()
@@ -151,6 +274,28 @@ public class DialogoMarcapasos : MonoBehaviour
             
         
 
+        }else if (args.interactable.gameObject.tag == "Raton" && indicador == 8)
+        {
+            
+            interfazMarcapasos.SetActive(false);
+            interfazmarcaAumentaE.SetActive(true);
+            indicador = 9;
+            PasosSiguientes();
+            lightRaton.enabled = false;
+            lightBotonConfirm.enabled = true;
+
+
+        }else if (args.interactable.gameObject.tag == "ConfirmEnergia" && indicador == 9)
+        {
+        
+            interfazmarcaAumentaE.SetActive(false);
+            interfazMarcaEntrega.SetActive(true);
+            indicador = 10;
+            PasosSiguientes();
+            lightBotonConfirm.enabled = false;
+            PasoNext=true;
+
+
         }
         
     }
@@ -174,6 +319,15 @@ public class DialogoMarcapasos : MonoBehaviour
             + " en la configuración de la carga.";
 
             
+        }else if (args.interactable.gameObject.tag == "AllowGuiada" && indicador == 12)
+        {
+            interfazMarcaEntrega.SetActive(false);
+               
+            indicador = 13;
+            PasosSiguientes();
+            StartTimer();
+            
+
         }
         
     }
