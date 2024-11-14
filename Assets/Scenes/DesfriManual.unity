@@ -9283,6 +9283,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131626658}
   m_Mesh: {fileID: -5053925668127403250, guid: 1ab31618ffa1a2e4880d9d497d36db79, type: 3}
+--- !u!114 &132419703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
+  m_PrefabInstance: {fileID: 585255824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &138344069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23981,7 +23992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &561486440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24314,15 +24325,24 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_text
-      value: 
+      value: "Felicidades, has completado la simulaci\xF3n independiente, recuerda
+        compartir tus resultados"
+      objectReference: {fileID: 0}
+    - target: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
+      propertyPath: m_fontSize
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_margin.w
-      value: -699.9377
+      value: 29.351433
       objectReference: {fileID: 0}
     - target: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_margin.y
-      value: -76.53093
+      value: -102.867874
+      objectReference: {fileID: 0}
+    - target: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 270073381009767402, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_text
@@ -24356,8 +24376,7 @@ PrefabInstance:
       objectReference: {fileID: 1648575310}
     - target: {fileID: 1495109545060919840, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_text
-      value: "Felicidades, has completado la simulaci\xF3n independiente, recuerda
-        compartir tus resultados"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1495109545060919840, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_fontSize
@@ -24501,11 +24520,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3528896245998055692, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 130
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 3528896245998055692, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -905
+      value: -871
       objectReference: {fileID: 0}
     - target: {fileID: 3528896245998055692, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -33959,7 +33978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &744119187
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -57388,6 +57407,9 @@ MonoBehaviour:
   conectorPalasDea: {fileID: 1225286561}
   startTime: 0
   panelCodigo: {fileID: 1279035815}
+  presentationDateTime: 
+  score: 0
+  completionTime: 0
 --- !u!4 &1316642729
 Transform:
   m_ObjectHideFlags: 0
@@ -93565,6 +93587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 1844334500}
+  instruccion: {fileID: 132419703}
 --- !u!114 &2062303494
 MonoBehaviour:
   m_ObjectHideFlags: 0

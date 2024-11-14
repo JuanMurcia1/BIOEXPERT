@@ -5,16 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
-public class NumberButton : MonoBehaviour
+public class CodigoInicial : MonoBehaviour
 {
-    public TMP_InputField inputField; // Referencia al InputField
-    public string number; // El número que representa este botón
-
-
-
-   
-
-    public void OnHoverEntered(HoverEnterEventArgs args)
+      public TMP_InputField inputField; // Referencia al InputField
+      public string number;
+       public void OnHoverEntered(HoverEnterEventArgs args)
     {
         if (args.interactable.gameObject.tag == "1"&& inputField.text.Length < 5)
         {
@@ -67,8 +62,4 @@ public class NumberButton : MonoBehaviour
         }
         
     }
-
- 
-
-    
 }
