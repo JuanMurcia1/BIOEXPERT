@@ -129,14 +129,14 @@ public class DialogoDEA : MonoBehaviour
      public void PasosSiguientes()
     {
         if (indicador == 1){
-            instruccion.text = "Bienvenido al módulo de Desfibrilación Externo Automático, aquí aprenderás a configurar la interfaz y utilizar algunos elementos de bioinstrumentación. \n\n\n Presiona H para comenzar con la simulación. ";
+            instruccion.text = "Bienvenido al módulo de Desfibrilación Externo Automático, aquí aprenderás a configurar la interfaz y utilizar algunos elementos de bioinstrumentación. \n\n\n Presiona B para comenzar con la simulación. ";
         }else if (indicador == 2)
         {
             instruccion.text = "A tu derecha podrás ver el elemento con el cual vas a interactuar." + " Cuando agarres el objeto, podrás ver la información de el mismo en esta pantalla." + 
-            " \n\n Cuando hayas terminado presiona H ";
+            " \n\n Cuando hayas terminado presiona B ";
         }else if (indicador ==3)
         {
-            instruccion.text = "¡Perfecto! Ahora vamos a empezar a colocar el DEA en el desfibrilador y maniquí \n\n\n Presiona H para ver el orden correcto en el que tienes que colocar";
+            instruccion.text = "¡Perfecto! Ahora vamos a empezar a colocar el DEA en el desfibrilador y maniquí \n\n\n Presiona B para ver el orden correcto en el que tienes que colocar";
 
             correctPlace.SetActive(true);
 
@@ -166,19 +166,19 @@ public class DialogoDEA : MonoBehaviour
             }
         }else if(indicador ==6)
         {
-            instruccion.text = "Muy bien, ahora vamos a esperar a que el monitor analice el estado del paciente para saber si es necesaria una descarga electrica.\n\n presiona H para continuar.";
+            instruccion.text = "Muy bien, ahora vamos a esperar a que el monitor analice el estado del paciente para saber si es necesaria una descarga electrica.\n\n presiona B para continuar.";
             videoDEA.SetActive(true);
 
             PasoNext=true;
 
         }else if(indicador == 7){
 
-            instruccion.text = "El análisis automático determinó que es necesaria una descarga eléctrica, recuerda evitar cualquier contacto físico con el paciente una vez se vaya a inciar la descarga eléctrica. \n\n presiona H para continuar.";
+            instruccion.text = "El análisis automático determinó que es necesaria una descarga eléctrica, recuerda evitar cualquier contacto físico con el paciente una vez se vaya a inciar la descarga eléctrica. \n\n presiona B para continuar.";
             videoDEA.SetActive(false);
 
         }else if(indicador == 8){
 
-            instruccion.text = "Felicidades ahora puedes tomar la simulación independiente de el DEA. \n\n presiona H para continuar";
+            instruccion.text = "Felicidades ahora puedes tomar la simulación independiente de el DEA. \n\n presiona B para continuar";
             
         }else if(indicador == 9){
             Debug.Log(indicador);

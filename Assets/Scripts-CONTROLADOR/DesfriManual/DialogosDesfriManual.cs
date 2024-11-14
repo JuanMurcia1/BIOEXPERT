@@ -87,17 +87,17 @@ public class DialogosDesfriManual : MonoBehaviour
         if (indicador == 0)
         {
             instruccion.text = "Bienvenido al módulo de desfibrilación manual, aquí aprenderás a configurar la interfaz" + 
-            " y utilizar algunos elementos de bioinstrumentación \n\n\n Presiona H para comenzar con la simulación. ";
+            " y utilizar algunos elementos de bioinstrumentación \n\n\n Presiona B para comenzar con la simulación. ";
         }else if (indicador == 1)
         {
             instruccion.text = "A tu derecha podrás ver los elementos con los cuales vas a interactuar." + 
             " Cuando agarres un objeto, podrás ver información del mismo en esta pantalla." + 
-            " \n\n Cuando hayas terminado presiona H ";
+            " \n\n Cuando hayas terminado presiona B ";
             PasoNext= false;
         }else if (indicador ==2)
         {
             instruccion.text = "perfecto!, ahora vamos a empezar a colocar los elementos" + 
-            " de bioinstrumentación en el desfibrilador y maniquí. \n\n Presiona H para ver el orden" +
+            " de bioinstrumentación en el desfibrilador y maniquí. \n\n Presiona B para ver el orden" +
             " correcto en el que tienes que colocar cada elemento.";
 
         }else if (indicador ==3)
@@ -112,7 +112,7 @@ public class DialogosDesfriManual : MonoBehaviour
         }else if (indicador ==4)
         {
             instruccion.text= "Perfecto!, has conectado bien todos los elementos necesarios, ahora vamos a interactuar con el desfibrilador" +
-            " y la interfaz de desfibrilación manual. \n\n Presion H para avanzar";
+            " y la interfaz de desfibrilación manual. \n\n Presion B para avanzar";
             aciertoVisual1.SetActive(false);
             
 
@@ -149,7 +149,7 @@ public class DialogosDesfriManual : MonoBehaviour
 
             instruccion.text= "La descarga se realizará de forma automática cuando el paciente presente" +
             " ritmos irregulares en la monitorización de su corazón. " +
-            "\n\n Presiona H para continuar";
+            "\n\n Presiona B para continuar";
        
             
         }else if (indicador ==9)
@@ -201,7 +201,7 @@ public class DialogosDesfriManual : MonoBehaviour
         {
                   
             instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas y está listo para una desfibrilación si se requiere.!"+
-            "\n\nPresiona H para compartir los resultados";
+            "\n\nPresiona B para compartir los resultados";
              StopTimer();   
             codeOn=true;
             if(completionTime <= 10 )

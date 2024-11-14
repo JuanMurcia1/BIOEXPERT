@@ -88,7 +88,7 @@ public class DialogoSignos : MonoBehaviour
         if (indicador == 1)
         {
             instruccion.text = "Bienvenido al módulo de signos vitales, aquí aprenderás a configurar la interfaz" + 
-            " y utilizar algunos elementos de bioinstrumentación \n\n\n Presiona H para comenzar con la simulación. ";
+            " y utilizar algunos elementos de bioinstrumentación \n\n\n Presiona B para comenzar con la simulación. ";
         }else if (indicador == 2)
         {
             instruccion.text = "A tu derecha podrás ver los elementos con los cuales vas a interactuar." + 
@@ -130,7 +130,7 @@ public class DialogoSignos : MonoBehaviour
         }else if (indicador ==7)
         {
             instruccion.text= "Perfecto!, has conectado bien todos los elementos necesarios, ahora vamos a interactuar con el desfibrilador" +
-            "\n\n Presion H para avanzar";
+            "\n\n Presion B para avanzar";
             
             aciertoVisual3.SetActive(true);
              aciertoVisual1.SetActive(false);
@@ -167,7 +167,7 @@ public class DialogoSignos : MonoBehaviour
         {
             instruccion.text =" Las lecturas que puedes ver son correspondientes a la monitorización del corazón por medio de los electrodos," + 
             " en segundo nivel, la pulxiometría y por último la toma de la presión"+ 
-            "\n\n Simulación completada, para finalizar presiona el botón H ";
+            "\n\n Simulación completada, para finalizar presiona el botón B ";
             BotonInvas.enabled = false;
             PasoNext = true;
 
@@ -231,7 +231,7 @@ public class DialogoSignos : MonoBehaviour
         {
                   
             instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas de nuevo.!"
-            + "\n\nPresiona H para compartir los resultados";
+            + "\n\nPresiona B para compartir los resultados";
             StopTimer(); 
             panelCodigo.SetActive(true);
             interfaceCanvaFlotante.SetActive(false);
