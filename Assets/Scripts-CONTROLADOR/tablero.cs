@@ -30,9 +30,13 @@ public class tablero : MonoBehaviour
     private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
     private bool isOk;
 
+    public GameObject interfazCodigos;
+    public GameObject buttonSkip;
+
 
     private void Start()
     {
+        interfazCodigos.SetActive(false);
         isOk = true;
         Intrucciones2.SetActive(true);
         StartCoroutine(CambiarPantallaConRetraso(15));
@@ -57,9 +61,10 @@ public class tablero : MonoBehaviour
         }
         if (indicador == 2)
         {
-            Debug.Log("ETAPA 2");
-            Intrucciones.text = "ETAPA 2   Aquí aprenderás a desplegar la interfaz y observar los módulos disponibles, Observa el botón resaltado en azúl y oprímelo en tu mando. abre la interfaz con (J)";
-            gatilloLight.enabled = false;
+            //Debug.Log("ETAPA 2");
+            //Intrucciones.text = "ETAPA 2   Aquí aprenderás a desplegar la interfaz y observar los módulos disponibles, Observa el botón resaltado en azúl y oprímelo en tu mando. abre la interfaz con (J)";
+            //gatilloLight.enabled = false;
+            Siguiente();
             
         }
 
@@ -74,7 +79,7 @@ public class tablero : MonoBehaviour
         }
          if (indicador == 4)
         {
-            Intrucciones.text= "¡Excelente trabajo! Has completado el tutorial básico. Antes de terminar, reconozcamos el entorno.Aquí podrás encontrar todos los elementos necesarios para las prácticas.Cuando estés listo presiona el botón del menú J para seleccionar qué tipo de experiencia quieres realizar." ;
+            Intrucciones.text= "¡Excelente trabajo! Has completado el tutorial básico. Antes de terminar, reconozcamos el entorno.Aquí podrás encontrar todos los elementos necesarios para las prácticas.\n\n Ingresa tu código a tu derecha para ingresar a un módulo" ;
             Debug.Log("ETAPA LIBRE");
             desfibrilador.SetActive(true);
             mando.SetActive(false);
@@ -84,6 +89,7 @@ public class tablero : MonoBehaviour
             SPO2.SetActive(true);
             monitorizacion.SetActive(true);
             maniqui.SetActive(true);
+            interfazCodigos.SetActive(true);
            
             
 
@@ -157,6 +163,7 @@ public class tablero : MonoBehaviour
     {
         yield return new WaitForSeconds(t); // Esperar 5 segundos
         Siguiente();
+        buttonSkip.SetActive(false);
     }
 
     private IEnumerator CambiarTexto(float t)
@@ -173,11 +180,15 @@ public class tablero : MonoBehaviour
         {
             Debug.Log("Hoverrr");      
             isOk = false;
+            buttonSkip.SetActive(false);
 
             Intrucciones2.SetActive(false);
             Intrucciones1.SetActive(false);
 
-            Instrucciones3.text= "Tutorial saltado.";
+            interfazCodigos.SetActive(true);
+            Destroy(mando);
+
+            Instrucciones3.text= "Tutorial saltado.\n\n\n Ingresa tu código a tu derecha para ingresar a un módulo";
           
     
             
