@@ -42,6 +42,8 @@ public class DialogoDEA : MonoBehaviour
     public string presentationDateTime;
     public int score;        
     public int completionTime;
+
+    private string codigo;
     
     // Start is called before the first frame update
      
@@ -58,8 +60,10 @@ public class DialogoDEA : MonoBehaviour
 
         if (SendCodigo.Instance != null)
         {
-            string codigo = SendCodigo.Instance.GetSavedCodigo();
+            codigo = SendCodigo.Instance.GetSavedCodigo();
+            codigo = codigo.Substring(codigo.Length - 4);
             Debug.Log("Código obtenido desde AnotherScript: " + codigo);
+            codigo = codigo.Substring(codigo.Length - 4);
         }else{
             Debug.Log("Código no encontrado en DEA");
         }
@@ -198,6 +202,7 @@ public class DialogoDEA : MonoBehaviour
 
         }else if(indicador == 10){
 
+            completionTime = (int)elapsedTime;
             instruccion.text = $"Felicidades haz terminado la simulación independiente de el DEA. \n\n con un tiempo de: {elapsedTime:F1} segundos";
             if(completionTime <= 10 )
             {
@@ -349,7 +354,7 @@ public void actualizacionIndicador()
         string jsonData = JsonUtility.ToJson(datos);
 
     // URL del endpoint al que enviarás los datos
-        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/3771/dea"; // Reemplaza con tu URL
+        string url = $"https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/{codigo}/dea"; // Reemplaza con tu URL
 
     // Crear la petición PUT
         UnityWebRequest request = new UnityWebRequest(url, "PUT");
