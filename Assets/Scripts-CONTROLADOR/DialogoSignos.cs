@@ -336,7 +336,7 @@ public class DialogoSignos : MonoBehaviour
         string jsonData = JsonUtility.ToJson(datos);
 
     // URL del endpoint al que enviarás los datos
-        string url = $"https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/{codigo}/monitorizacion"; // Reemplaza con tu URL
+        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/2705/monitorizacion"; // Reemplaza con tu URL
 
     // Crear la petición PUT
         UnityWebRequest request = new UnityWebRequest(url, "PUT");

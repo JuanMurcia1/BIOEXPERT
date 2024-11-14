@@ -7442,7 +7442,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &561486440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14469,7 +14469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1082890700
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18279,6 +18279,9 @@ MonoBehaviour:
   perillaRight: {fileID: 320960815}
   conectorRight: {fileID: 1368753293}
   vitalesInstrumentos: {fileID: 919132148387161521}
+  presentationDateTime: 
+  score: 0
+  completionTime: 0
   error1: 0
   error2: 0
   PasoNext: 0
