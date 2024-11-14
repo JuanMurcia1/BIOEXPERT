@@ -37,6 +37,8 @@ public class DialogoMarcapasos : MonoBehaviour
     public GameObject interfazMarcapasos;
     public GameObject interfazmarcaAumentaE;
     public GameObject interfazMarcaEntrega;
+    public GameObject conectorIndependienteMoni;
+    public GameObject conectormoniGood;
     
    public Light lightRaton;
    public Light lightBotonConfirm;
@@ -53,6 +55,7 @@ public class DialogoMarcapasos : MonoBehaviour
     private bool isTimerRunning = false;
     private bool codeOn = false;
     public GameObject panelCodigo;
+    public SendCodigo sendCodigo;
     
     // Start is called before the first frame update
     void Start()
@@ -63,6 +66,7 @@ public class DialogoMarcapasos : MonoBehaviour
         PasosSiguientes();
         lightRaton.enabled= false;
         lightBotonConfirm.enabled = false;
+        //sendCodigo.savedCodigo=
     }
 
     // Update is called once per frame
@@ -173,6 +177,9 @@ public class DialogoMarcapasos : MonoBehaviour
             
             interfaceCanvaFlotante.SetActive(true);
             interfaceFinalización.SetActive(false);
+            interfazMarcaEntrega.SetActive(false);
+            conectormoniGood.SetActive(false);
+            conectorIndependienteMoni.SetActive(true);
             instruccion.text= "!Algo anda mal¡, el monitor parece no tener lecturas de la interfaz Marcapasos" +
             " y necesitamos confirmar la carga de desfibrilación para el paciente, apresúrate y arréglalo" +
             " \n\n\n Errores restantes: " +errroresRest;
@@ -183,6 +190,51 @@ public class DialogoMarcapasos : MonoBehaviour
                 UpdateTimeText(completionTime);
                 }
             GetCurrentDateTime();                
+            
+            
+       
+            
+        }else if (indicador ==14)
+        {
+           
+            
+        
+            instruccion.text= "!Algo anda mal¡, el monitor parece no tener lecturas de la interfaz Marcapasos" +
+            " y necesitamos confirmar la carga de desfibrilación para el paciente, apresúrate y arréglalo" +
+            " \n\n\n Errores restantes: " +errroresRest;
+                        
+            
+            
+       
+            
+        }else if (indicador ==15)
+        {
+           
+            
+        
+            instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas y está listo para una desfibrilación si se requiere.!"+
+            "\n\nPresiona B para compartir los resultados";
+             StopTimer();
+
+             codeOn=true;
+            if(completionTime <= 10 )
+            {
+                score= 100;
+                Debug.Log("Su puntuación es de: " + score);
+            }else if (completionTime > 10 )
+            {
+                score= 60;
+
+            }else if(completionTime > 100)
+            {
+                score=20;
+            }
+
+            Debug.Log(completionTime);
+
+            StartCoroutine(EnviarDatosAlServidor());
+             
+                        
             
             
        
@@ -219,6 +271,40 @@ public class DialogoMarcapasos : MonoBehaviour
             panelCodigo.SetActive(true);
             interfaceCanvaFlotante.SetActive(false);
 
+        }
+    }
+
+    IEnumerator EnviarDatosAlServidor()
+    {
+        // Crea una instancia de la clase Datos y asigna tus variables
+        Datos datos = new Datos();
+        datos.presentationDateTime = presentationDateTime;
+        datos.score = score;
+        datos.completionTime = Mathf.RoundToInt(completionTime );
+
+        string jsonData = JsonUtility.ToJson(datos);
+
+    // URL del endpoint al que enviarás los datos
+        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/1506/marcapasos"; // Reemplaza con tu URL
+
+    // Crear la petición PUT
+        UnityWebRequest request = new UnityWebRequest(url, "PUT");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Enviar la petición y esperar la respuesta
+        yield return request.SendWebRequest();
+
+        // Verificar si hubo errores
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Datos enviados correctamente: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error al enviar datos: " + request.error);
         }
     }
 
@@ -294,6 +380,29 @@ public class DialogoMarcapasos : MonoBehaviour
             PasosSiguientes();
             lightBotonConfirm.enabled = false;
             PasoNext=true;
+
+
+        }else if (args.interactable.gameObject.tag == "monitoriIndi" && indicador == 13)
+        {
+            conectorIndependienteMoni.SetActive(false);
+            conectormoniGood.SetActive(true);
+            
+            interfazmarcaAumentaE.SetActive(true);
+            errroresRest --;
+            indicador=14;
+            PasosSiguientes();
+            acierto.Play();
+
+
+        }else if (args.interactable.gameObject.tag == "ConfirmEnergia" && indicador == 14)
+        {
+        
+            interfazmarcaAumentaE.SetActive(false);
+            interfazMarcaEntrega.SetActive(true);
+            errroresRest --;
+            indicador=15;
+            PasosSiguientes();
+            acierto.Play();
 
 
         }

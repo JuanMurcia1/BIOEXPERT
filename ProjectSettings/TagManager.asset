@@ -40,6 +40,8 @@ TagManager:
   - enviar
   - perillaMarcapasos
   - skip
+  - Meteor
+  - monitoriIndi
   layers:
   - Default
   - TransparentFX

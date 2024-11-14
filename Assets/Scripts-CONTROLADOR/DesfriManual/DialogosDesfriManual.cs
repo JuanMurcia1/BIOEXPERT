@@ -263,7 +263,7 @@ public class DialogosDesfriManual : MonoBehaviour
         string jsonData = JsonUtility.ToJson(datos);
 
     // URL del endpoint al que enviarás los datos
-        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/9141/desfibrilacionManual"; // Reemplaza con tu URL
+        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/2705/desfibrilacionManual"; // Reemplaza con tu URL
 
     // Crear la petición PUT
         UnityWebRequest request = new UnityWebRequest(url, "PUT");
@@ -365,7 +365,7 @@ public class DialogosDesfriManual : MonoBehaviour
 
 
 
-    public void OnSelectExited(SelectExitEventArgs args)
+    public void OnSelectExit(SelectExitEventArgs args)
     {
         
         PasosSiguientes();
@@ -460,7 +460,7 @@ public class DialogosDesfriManual : MonoBehaviour
             PasosSiguientes();
             acierto.Play();
 
-        }
+        }   
         
     }
 

@@ -14392,7 +14392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 1727080006}
-  instruccion: {fileID: 0}
+  instruccion: {fileID: 1918324549}
 --- !u!114 &1048618126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21953,6 +21953,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1367296945}
+        m_TargetAssemblyTypeName: NumberButton, Assembly-CSharp
+        m_MethodName: OnHoverEntered
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverExited:
     m_PersistentCalls:
       m_Calls:
@@ -21973,18 +21985,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1313029565}
         m_TargetAssemblyTypeName: DialogoSignos, Assembly-CSharp
-        m_MethodName: OnSelectEntered
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1367296945}
-        m_TargetAssemblyTypeName: NumberButton, Assembly-CSharp
         m_MethodName: OnSelectEntered
         m_Mode: 0
         m_Arguments:
@@ -37032,6 +37032,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1367296945}
+        m_TargetAssemblyTypeName: NumberButton, Assembly-CSharp
+        m_MethodName: OnHoverEntered
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverExited:
     m_PersistentCalls:
       m_Calls:
@@ -37052,18 +37064,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1313029565}
         m_TargetAssemblyTypeName: DialogoSignos, Assembly-CSharp
-        m_MethodName: OnSelectEntered
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1367296945}
-        m_TargetAssemblyTypeName: NumberButton, Assembly-CSharp
         m_MethodName: OnSelectEntered
         m_Mode: 0
         m_Arguments:
@@ -37988,6 +37988,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909278863}
   m_CullTransparentMesh: 1
+--- !u!114 &1918324549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
+  m_PrefabInstance: {fileID: 2144980215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1921237893
 GameObject:
   m_ObjectHideFlags: 0
