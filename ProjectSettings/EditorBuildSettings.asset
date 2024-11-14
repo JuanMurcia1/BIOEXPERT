@@ -11,6 +11,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/simulacion.unity
     guid: 02f46668a1c8f4f4db2a3d16288fd353
+  - enabled: 1
+    path: Assets/Scenes/DesfriManual.unity
+    guid: 40cd22ac341c1764daa4d7a0c1526a2a
+  - enabled: 1
+    path: Assets/Scenes/SignosVitales.unity
+    guid: 0b2f071a8b76e8b40a8672dd6b8c73a0
+  - enabled: 1
+    path: Assets/Scenes/DEA.unity
+    guid: c47fb7e265f58894f87e8a7c80360f74
+  - enabled: 1
+    path: Assets/Scenes/MarcaPas.unity
+    guid: 106cfa48dba874f47a43091fdabf2ff8
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 48f0149a2910a5d4ab2557397069f552, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: f4894654300268b4a96827af40aa2b54, type: 2}

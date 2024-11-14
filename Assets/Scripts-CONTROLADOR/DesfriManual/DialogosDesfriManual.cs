@@ -4,9 +4,20 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
 using UnityEngine.XR;
+using System;
+using UnityEngine.Networking;
+
+
 
 public class DialogosDesfriManual : MonoBehaviour
 {
+    [System.Serializable]
+    public class Datos
+    {
+    public string presentationDateTime;
+    public int score;
+    public int completionTime;
+    }
     public TextMeshProUGUI instruccion;
     public TextMeshProUGUI tiempo;
     public GameObject perillaOff;
@@ -42,6 +53,10 @@ public class DialogosDesfriManual : MonoBehaviour
     public GameObject panelCodigo;
     private bool codeOn = false;
     private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
+
+    public string presentationDateTime;
+    public int score;        
+    public int completionTime;
     
     // Start is called before the first frame update
     void Start()
@@ -59,8 +74,8 @@ public class DialogosDesfriManual : MonoBehaviour
         actualizacionIndicador();
         if (isTimerRunning)
         {
-            float currentTime = Time.time - startTime;
-            UpdateTimeText(currentTime);
+            float completionTime = Time.time - startTime;
+            UpdateTimeText(completionTime);
         }
         panelCode();
     }
@@ -164,10 +179,11 @@ public class DialogosDesfriManual : MonoBehaviour
             " \n\n\n Errores restantes: " +errroresRest;
             StartTimer();
              if (isTimerRunning)
-        {
-            float currentTime = Time.time - startTime;
-            UpdateTimeText(currentTime);
-        }
+              {
+                completionTime = Mathf.RoundToInt(Time.time - startTime);
+                UpdateTimeText(completionTime);
+                }
+            GetCurrentDateTime();                
             
             
        
@@ -188,8 +204,30 @@ public class DialogosDesfriManual : MonoBehaviour
             "\n\nPresiona H para compartir los resultados";
              StopTimer();   
             codeOn=true;
+            if(completionTime <= 10 )
+            {
+                score= 100;
+                Debug.Log("Su puntuación es de: " + score);
+            }else if (completionTime > 10 )
+            {
+                score= 60;
+
+            }else if(completionTime > 100)
+            {
+                score=20;
+            }
+
+            Debug.Log(completionTime);
+
+            StartCoroutine(EnviarDatosAlServidor());
+            
         }
 
+    }
+    void GetCurrentDateTime()
+    {
+        presentationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"); // Guarda la fecha y hora actual
+        Debug.Log("Fecha y Hora guardadas: " + presentationDateTime.ToString());
     }
 
      private void StartTimer()
@@ -198,20 +236,57 @@ public class DialogosDesfriManual : MonoBehaviour
         isTimerRunning = true;
     }
 
-    private void StopTimer()
+    public void StopTimer()
     {
-        if (isTimerRunning)
+        if (isTimerRunning) // Verifica si el temporizador está activo
         {
-            float endTime = Time.time - startTime;
-            UpdateTimeText(endTime);
-            isTimerRunning = false;
+            float elapsedTime = Time.time - startTime; // Calcula el tiempo transcurrido
+            completionTime = (int)elapsedTime; // Convierte a segundos enteros y guarda en completionTime
+            isTimerRunning = false; // Desactiva el temporizador
+            Debug.Log("Tiempo completado: " + completionTime + " segundos.");
         }
     }
 
-    private void UpdateTimeText(float currentTime)
+    private void UpdateTimeText(float completionTime)
     {
-        tiempo.text = "Tiempo: " + currentTime.ToString("F2") + "Seg";
+        tiempo.text = "Tiempo: " + completionTime.ToString("F2") + "Seg";
     }
+
+    IEnumerator EnviarDatosAlServidor()
+    {
+        // Crea una instancia de la clase Datos y asigna tus variables
+        Datos datos = new Datos();
+        datos.presentationDateTime = presentationDateTime;
+        datos.score = score;
+        datos.completionTime = Mathf.RoundToInt(completionTime );
+
+        string jsonData = JsonUtility.ToJson(datos);
+
+    // URL del endpoint al que enviarás los datos
+        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/9141/desfibrilacionManual"; // Reemplaza con tu URL
+
+    // Crear la petición PUT
+        UnityWebRequest request = new UnityWebRequest(url, "PUT");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Enviar la petición y esperar la respuesta
+        yield return request.SendWebRequest();
+
+        // Verificar si hubo errores
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Datos enviados correctamente: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error al enviar datos: " + request.error);
+        }
+    }
+    
+
 
     public void panelCode()
     {
