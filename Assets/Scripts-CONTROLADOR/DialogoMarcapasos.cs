@@ -57,6 +57,8 @@ public class DialogoMarcapasos : MonoBehaviour
     private bool codeOn = false;
     public GameObject panelCodigo;
     public SendCodigo sendCodigo;
+
+    private string codigo;
     
     // Start is called before the first frame update
     void Start()
@@ -68,6 +70,15 @@ public class DialogoMarcapasos : MonoBehaviour
         lightRaton.enabled= false;
         lightBotonConfirm.enabled = false;
         //sendCodigo.savedCodigo=
+
+        if (SendCodigo.Instance != null)
+        {
+            codigo = SendCodigo.Instance.GetSavedCodigo();
+            codigo = codigo.Substring(codigo.Length - 4);
+            Debug.Log("Código obtenido desde AnotherScript: " + codigo);
+        }else{
+            Debug.Log("Código no encontrado en Marcapasos");
+        }
     }
 
     // Update is called once per frame
@@ -297,7 +308,7 @@ public class DialogoMarcapasos : MonoBehaviour
         string jsonData = JsonUtility.ToJson(datos);
 
     // URL del endpoint al que enviarás los datos
-        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/3771/marcapasos"; // Reemplaza con tu URL
+        string url = $"https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/{codigo}/marcapasos"; // Reemplaza con tu URL
 
     // Crear la petición PUT
         UnityWebRequest request = new UnityWebRequest(url, "PUT");

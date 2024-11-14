@@ -63,7 +63,6 @@ public class DialogoDEA : MonoBehaviour
             codigo = SendCodigo.Instance.GetSavedCodigo();
             codigo = codigo.Substring(codigo.Length - 4);
             Debug.Log("Código obtenido desde AnotherScript: " + codigo);
-            codigo = codigo.Substring(codigo.Length - 4);
         }else{
             Debug.Log("Código no encontrado en DEA");
         }

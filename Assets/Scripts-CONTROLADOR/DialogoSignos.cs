@@ -4,9 +4,18 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
 using UnityEngine.XR;
+using System;
+using UnityEngine.Networking;
 
 public class DialogoSignos : MonoBehaviour
 {
+    [System.Serializable]
+    public class Datos
+    {
+    public string presentationDateTime;
+    public int score;
+    public int completionTime;
+    }
 
     public TextMeshProUGUI instruccion;
     public TextMeshProUGUI tiempo;
@@ -39,6 +48,9 @@ public class DialogoSignos : MonoBehaviour
     public GameObject conectorRight;
 
     public VitalesInstrumentos vitalesInstrumentos;
+    public string presentationDateTime;
+    public int score;        
+    public int completionTime;
 
     public bool error1 = false;
     public bool error2 = false;
@@ -47,6 +59,7 @@ public class DialogoSignos : MonoBehaviour
     private bool isTimerRunning = false;
     private bool boolcito= false;
     public GameObject panelCodigo;
+    private string codigo;
     
    
     private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
@@ -62,6 +75,15 @@ public class DialogoSignos : MonoBehaviour
         BotonInvas.enabled = false;
         acierto = GetComponent<AudioSource>();
         PasoNext = true;
+
+        if (SendCodigo.Instance != null)
+        {
+            codigo = SendCodigo.Instance.GetSavedCodigo();
+            codigo = codigo.Substring(codigo.Length - 4);
+            Debug.Log("Código obtenido desde AnotherScript: " + codigo);
+        }else{
+            Debug.Log("Código no encontrado en SignosVitales");
+        }
     }
 
     // Update is called once per frame
@@ -76,9 +98,10 @@ public class DialogoSignos : MonoBehaviour
 
         if (isTimerRunning)
         {
-            float currentTime = Time.time - startTime;
-            UpdateTimeText(currentTime);
+            float completionTime = Time.time - startTime;
+            UpdateTimeText(completionTime);
         }
+        
     }
 
     public void PasosSiguientes()
@@ -213,6 +236,14 @@ public class DialogoSignos : MonoBehaviour
             }
             boolcito= false;
 
+             StartTimer();
+             if (isTimerRunning)
+              {
+                completionTime = Mathf.RoundToInt(Time.time - startTime);
+                UpdateTimeText(completionTime);
+                }
+            GetCurrentDateTime(); 
+
 
             
 
@@ -235,6 +266,25 @@ public class DialogoSignos : MonoBehaviour
             StopTimer(); 
             panelCodigo.SetActive(true);
             interfaceCanvaFlotante.SetActive(false);
+            StopTimer();
+
+             
+            if(completionTime <= 10 )
+            {
+                score= 100;
+                Debug.Log("Su puntuación es de: " + score);
+            }else if (completionTime > 10 )
+            {
+                score= 60;
+
+            }else if(completionTime > 100)
+            {
+                score=20;
+            }
+
+            Debug.Log(completionTime);
+
+            StartCoroutine(EnviarDatosAlServidor());
             
           
 
@@ -248,25 +298,65 @@ public class DialogoSignos : MonoBehaviour
 
     }
 
-    private void StartTimer()
+    void GetCurrentDateTime()
+    {
+        presentationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"); // Guarda la fecha y hora actual
+        Debug.Log("Fecha y Hora guardadas: " + presentationDateTime.ToString());
+    }
+
+     private void StartTimer()
     {
         startTime = Time.time;
         isTimerRunning = true;
     }
 
-    private void StopTimer()
+    public void StopTimer()
     {
-        if (isTimerRunning)
+        if (isTimerRunning) // Verifica si el temporizador está activo
         {
-            float endTime = Time.time - startTime;
-            UpdateTimeText(endTime);
-            isTimerRunning = false;
+            float elapsedTime = Time.time - startTime; // Calcula el tiempo transcurrido
+            completionTime = (int)elapsedTime; // Convierte a segundos enteros y guarda en completionTime
+            isTimerRunning = false; // Desactiva el temporizador
+            Debug.Log("Tiempo completado: " + completionTime + " segundos.");
         }
     }
 
-    private void UpdateTimeText(float currentTime)
+    private void UpdateTimeText(float completionTime)
     {
-        tiempo.text = "Tiempo: " + currentTime.ToString("F2") + "Seg";
+        tiempo.text = "Tiempo: " + completionTime.ToString("F2") + "Seg";
+    }
+    IEnumerator EnviarDatosAlServidor()
+    {
+        // Crea una instancia de la clase Datos y asigna tus variables
+        Datos datos = new Datos();
+        datos.presentationDateTime = presentationDateTime;
+        datos.score = score;
+        datos.completionTime = Mathf.RoundToInt(completionTime );
+
+        string jsonData = JsonUtility.ToJson(datos);
+
+    // URL del endpoint al que enviarás los datos
+        string url = $"https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/{codigo}/monitorizacion"; // Reemplaza con tu URL
+
+    // Crear la petición PUT
+        UnityWebRequest request = new UnityWebRequest(url, "PUT");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Enviar la petición y esperar la respuesta
+        yield return request.SendWebRequest();
+
+        // Verificar si hubo errores
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Datos enviados correctamente: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error al enviar datos: " + request.error);
+        }
     }
 
 

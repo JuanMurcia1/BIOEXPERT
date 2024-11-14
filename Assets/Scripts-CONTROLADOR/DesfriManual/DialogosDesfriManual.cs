@@ -57,6 +57,7 @@ public class DialogosDesfriManual : MonoBehaviour
     public string presentationDateTime;
     public int score;        
     public int completionTime;
+    private string codigo;
     
     
     // Start is called before the first frame update
@@ -67,6 +68,15 @@ public class DialogosDesfriManual : MonoBehaviour
         PasoNext= true;
         lightRaton.enabled= false;
         lightBotonConfirm.enabled = false;
+
+        if (SendCodigo.Instance != null)
+        {
+            codigo = SendCodigo.Instance.GetSavedCodigo();
+            codigo = codigo.Substring(codigo.Length - 4);
+            Debug.Log("Código obtenido desde AnotherScript: " + codigo);
+        }else{
+            Debug.Log("Código no encontrado en Dialogos");
+        }
     }
 
     // Update is called once per frame
@@ -266,7 +276,7 @@ public class DialogosDesfriManual : MonoBehaviour
         string jsonData = JsonUtility.ToJson(datos);
 
     // URL del endpoint al que enviarás los datos
-        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/2705/desfibrilacionManual"; // Reemplaza con tu URL
+        string url = $"https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/{codigo}/desfibrilacionManual"; // Reemplaza con tu URL
 
     // Crear la petición PUT
         UnityWebRequest request = new UnityWebRequest(url, "PUT");
