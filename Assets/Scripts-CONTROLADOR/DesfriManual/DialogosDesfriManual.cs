@@ -58,6 +58,7 @@ public class DialogosDesfriManual : MonoBehaviour
     public int score;        
     public int completionTime;
     
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -220,6 +221,8 @@ public class DialogosDesfriManual : MonoBehaviour
             Debug.Log(completionTime);
 
             StartCoroutine(EnviarDatosAlServidor());
+            
+            
             
         }
 

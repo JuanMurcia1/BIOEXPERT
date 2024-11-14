@@ -39,6 +39,7 @@ public class DialogoMarcapasos : MonoBehaviour
     public GameObject interfazMarcaEntrega;
     public GameObject conectorIndependienteMoni;
     public GameObject conectormoniGood;
+    public GameObject interfazPrincipal;
     
    public Light lightRaton;
    public Light lightBotonConfirm;
@@ -233,6 +234,7 @@ public class DialogoMarcapasos : MonoBehaviour
             Debug.Log(completionTime);
 
             StartCoroutine(EnviarDatosAlServidor());
+            
              
                         
             
@@ -274,6 +276,16 @@ public class DialogoMarcapasos : MonoBehaviour
         }
     }
 
+    public void aperturaInterfaz()
+    {
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+        bool estadoActual = interfazPrincipal.activeSelf;
+        interfazPrincipal.SetActive(!estadoActual);
+        }
+        
+    }
+
     IEnumerator EnviarDatosAlServidor()
     {
         // Crea una instancia de la clase Datos y asigna tus variables
@@ -285,7 +297,7 @@ public class DialogoMarcapasos : MonoBehaviour
         string jsonData = JsonUtility.ToJson(datos);
 
     // URL del endpoint al que enviarás los datos
-        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/1506/marcapasos"; // Reemplaza con tu URL
+        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/3771/marcapasos"; // Reemplaza con tu URL
 
     // Crear la petición PUT
         UnityWebRequest request = new UnityWebRequest(url, "PUT");

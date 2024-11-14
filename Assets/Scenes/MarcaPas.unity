@@ -5878,6 +5878,7 @@ MonoBehaviour:
   interfazMarcaEntrega: {fileID: 1547269461}
   conectorIndependienteMoni: {fileID: 30184015}
   conectormoniGood: {fileID: 1731121227}
+  interfazPrincipal: {fileID: 1590859545}
   lightRaton: {fileID: 348233539}
   lightBotonConfirm: {fileID: 377762645}
   errroresRest: 2
@@ -5890,6 +5891,7 @@ MonoBehaviour:
   completionTime: 0
   startTime: 0
   panelCodigo: {fileID: 1644257088}
+  sendCodigo: {fileID: 0}
 --- !u!4 &288862403
 Transform:
   m_ObjectHideFlags: 0
@@ -19675,7 +19677,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputField: {fileID: 1727080006}
-  instruccion: {fileID: 0}
+  instruccion: {fileID: 2022430316}
 --- !u!114 &1048618126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50798,6 +50800,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001059183}
   m_CullTransparentMesh: 1
+--- !u!114 &2022430316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 62570518079640224, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
+  m_PrefabInstance: {fileID: 2144980215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2029930249
 GameObject:
   m_ObjectHideFlags: 0
