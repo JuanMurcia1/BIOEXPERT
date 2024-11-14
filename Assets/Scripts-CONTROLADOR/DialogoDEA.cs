@@ -5,9 +5,18 @@ using UnityEngine.XR.Interaction.Toolkit;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
+using System;
+using UnityEngine.Networking;
 
 public class DialogoDEA : MonoBehaviour
 {
+    [System.Serializable]
+    public class Datos
+    {
+    public string presentationDateTime;
+    public int score;
+    public int completionTime;
+    }
     private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
     private  XRControls controls;
     public GameObject colliderDEA3;
@@ -30,6 +39,9 @@ public class DialogoDEA : MonoBehaviour
     public GameObject videoDEA;
     private bool isRunning; // Estado del temporizador
     public float elapsedTime = 0f; // Tiempo acumulado
+    public string presentationDateTime;
+    public int score;        
+    public int completionTime;
     
     // Start is called before the first frame update
      
@@ -167,6 +179,8 @@ public class DialogoDEA : MonoBehaviour
             PasoNext = false;
             instruccion.text = "El DEA no está funcionando correctamente señala qué cosas están mal para arreglarlo, ¡Apresúrate!. \n\n errores: "+errores+$"\n\nTiempo: {elapsedTime:F1} segundos";
 
+        GetCurrentDateTime();
+
             if (perillaDEA.activeSelf && errores ==2){
                 perillaOff.SetActive(true);
                 perillaDEA.SetActive(false);
@@ -185,6 +199,21 @@ public class DialogoDEA : MonoBehaviour
         }else if(indicador == 10){
 
             instruccion.text = $"Felicidades haz terminado la simulación independiente de el DEA. \n\n con un tiempo de: {elapsedTime:F1} segundos";
+            if(completionTime <= 10 )
+            {
+                score= 100;
+                Debug.Log("Su puntuación es de: " + score);
+            }else if (completionTime > 10 )
+            {
+                score= 60;
+
+            }else if(completionTime > 100)
+            {
+                score=20;
+            }
+
+            
+            StartCoroutine(EnviarDatosAlServidor());
             
         }else if(indicador == 100){
 
@@ -306,6 +335,47 @@ public void actualizacionIndicador()
         
         
         PasosSiguientes();
+    }
+
+    IEnumerator EnviarDatosAlServidor()
+    {
+        completionTime = (int)elapsedTime;
+        // Crea una instancia de la clase Datos y asigna tus variables
+        Datos datos = new Datos();
+        datos.presentationDateTime = presentationDateTime;
+        datos.score = score;
+        datos.completionTime = Mathf.RoundToInt(completionTime );
+
+        string jsonData = JsonUtility.ToJson(datos);
+
+    // URL del endpoint al que enviarás los datos
+        string url = "https://bioexpert-backend-c3afbb8cfa06.herokuapp.com/api/performance/3771/dea"; // Reemplaza con tu URL
+
+    // Crear la petición PUT
+        UnityWebRequest request = new UnityWebRequest(url, "PUT");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Enviar la petición y esperar la respuesta
+        yield return request.SendWebRequest();
+
+        // Verificar si hubo errores
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log("Datos enviados correctamente: " + request.downloadHandler.text);
+        }
+        else
+        {
+            Debug.LogError("Error al enviar datos: " + request.error);
+        }
+    }
+
+    void GetCurrentDateTime()
+    {
+        presentationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"); // Guarda la fecha y hora actual
+        Debug.Log("Fecha y Hora guardadas: " + presentationDateTime.ToString());
     }
 
 }

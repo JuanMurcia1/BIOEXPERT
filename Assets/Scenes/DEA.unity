@@ -6715,7 +6715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &561486440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26293,6 +26293,9 @@ MonoBehaviour:
   indicador: 0
   videoDEA: {fileID: 1418760513}
   elapsedTime: 0
+  presentationDateTime: 
+  score: 0
+  completionTime: 0
 --- !u!4 &1814653622
 Transform:
   m_ObjectHideFlags: 0
@@ -28767,7 +28770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &2021560368
 Rigidbody:
   m_ObjectHideFlags: 0
