@@ -170,7 +170,11 @@ public class tablero : MonoBehaviour
     {
         yield return new WaitForSeconds(t);
         Intrucciones.text = "Observa cómo un holograma de tu mando aparece en el entorno y te resalta el botón para moverte. presiona H cuando termines de explorar.";
-        mando.SetActive(true);
+
+        if (mando != null){
+            mando.SetActive(true);
+        }
+        
         
     }
 

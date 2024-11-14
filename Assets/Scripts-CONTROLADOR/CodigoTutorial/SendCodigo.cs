@@ -8,9 +8,24 @@ using UnityEngine.SceneManagement;
 
 public class SendCodigo : MonoBehaviour
 {
+    public static SendCodigo Instance; 
     public TMP_InputField inputField;
     public TextMeshProUGUI instruccion;
     private string savedCodigo;
+
+    void Awake()
+    {
+        // Implementar Singleton para que solo haya una instancia del script
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Evita que este objeto sea destruido al cambiar de escena
+        }
+        else
+        {
+            Destroy(gameObject); // Si ya existe una instancia, destruimos la nueva para mantener solo una
+        }
+    }
 
     public void OnHoverEntered(HoverEnterEventArgs args)
     {
@@ -53,5 +68,10 @@ public class SendCodigo : MonoBehaviour
                     break;
             }
         }
+    }
+
+    public string GetSavedCodigo()
+    {
+        return savedCodigo;
     }
 }

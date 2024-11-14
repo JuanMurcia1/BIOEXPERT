@@ -32,24 +32,7 @@ public class DialogoDEA : MonoBehaviour
     public float elapsedTime = 0f; // Tiempo acumulado
     
     // Start is called before the first frame update
-     void Awake()
-    {
-        controls = new XRControls();
-    }
-
-    void OnEnable()
-    {
-        controls.Controllers.AdvanceStep.performed += OnAdvanceStepPerformed;
-        controls.Enable();
-        Debug.Log($"Binding Path: {controls.Controllers.AdvanceStep.bindings[0].path}");
-    }
-
-
-    void OnDisable()
-    {
-        controls.Controllers.AdvanceStep.performed -= OnAdvanceStepPerformed;
-        controls.Disable();
-    }
+     
     void Start()
     {   
         isRunning = false;
@@ -60,6 +43,14 @@ public class DialogoDEA : MonoBehaviour
         indicador = 1;
         audioSource = perillaDEA.GetComponent<AudioSource>();
         PasosSiguientes();
+
+        if (SendCodigo.Instance != null)
+        {
+            string codigo = SendCodigo.Instance.GetSavedCodigo();
+            Debug.Log("Código obtenido desde AnotherScript: " + codigo);
+        }else{
+            Debug.Log("Código no encontrado en DEA");
+        }
     }
 
     // Update is called once per frame
@@ -116,15 +107,6 @@ public class DialogoDEA : MonoBehaviour
         isRunning = false; // Detiene el temporizador
         PasosSiguientes(); // Actualiza el texto
         Debug.Log($"Temporizador detenido. Tiempo total: {elapsedTime} segundos.");
-    }
-    private void OnAdvanceStepPerformed(InputAction.CallbackContext context)
-    {
-        if (PasoNext)
-        {
-            
-            indicador++;
-            PasosSiguientes();
-        }
     }
      public void PasosSiguientes()
     {

@@ -28,7 +28,7 @@ public class SendButton : MonoBehaviour
         if(args.interactable.gameObject.tag == "enviar" && inputField.text.Length == 5)
         {
             savedNumber = inputField.text;
-            Debug.Log("Código guardado: " + savedNumber);
+            //Debug.Log("Código guardado: " + savedNumber);
             instruccion.text ="Datos enviados correctamente";
 
             
