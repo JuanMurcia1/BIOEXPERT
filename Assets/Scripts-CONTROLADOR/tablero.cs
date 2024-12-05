@@ -16,12 +16,10 @@ public class tablero : MonoBehaviour
     public GameObject DEA;
     public GameObject desfibrilador;
     public TextMeshProUGUI Intrucciones;
-    public GameObject Intrucciones2;
-    public GameObject Intrucciones1;
 
     public TextMeshProUGUI Instrucciones3;
 
-    public int indicador = 0;
+    public int indicador;
     public GameObject mando;
 
     public GameObject interfazPrincipal;
@@ -38,40 +36,43 @@ public class tablero : MonoBehaviour
     {
         interfazCodigos.SetActive(false);
         isOk = true;
-        Intrucciones2.SetActive(true);
-        StartCoroutine(CambiarPantallaConRetraso(15));
+        
         gatilloLight.enabled = false;
+        indicador =1;
+        Siguiente();
     }
 
     public void Siguiente()
     {
-        indicador++;
-        Intrucciones2.SetActive(false);
+        
 
         if (isOk){
-            Intrucciones1.SetActive(true);
+            
         }
         
 
         if (indicador == 1 )
         {
-            SiguienteTexto();
+           Intrucciones.text = "Bienvenido al tutorial interactivo para familiarizarte con el entorno simulado. "+ 
+           "En esta pantalla se mostrará paso a paso la información que necesitas para completar cada acción en" +
+           "el proceso \n\n Presiona B para continuar" ;
         
             
         }
         if (indicador == 2)
         {
-            //Debug.Log("ETAPA 2");
-            //Intrucciones.text = "ETAPA 2   Aquí aprenderás a desplegar la interfaz y observar los módulos disponibles, Observa el botón resaltado en azúl y oprímelo en tu mando. abre la interfaz con (J)";
-            //gatilloLight.enabled = false;
-            Siguiente();
+            
+            Intrucciones.text = "ETAPA 1 \n\n Ahora te enseñaremos a usar el mando para moverte. Usa el joystick para desplazarte en el entorno virtual."
+            + "Observa el mando a tu derecha para ver resaltado el jostick. \n\n Presiona B para continuar." ;
+            mando.SetActive(true);
+           
+            
             
         }
 
         if (indicador == 3)
         {
-            Intrucciones.text= "Visualiza el desfibrilador, ahora, acércate y estira tu mano, cuando estés cerca del objeto, presiona el gatillo trasero reflejado en el holograma del mando, PRESIONA H cuando hayas terminado.";
-            Debug.Log("ETAPA 3");
+            Intrucciones.text= "Visualiza el desfibrilador, ahora, acércate y estira tu mano, cuando estés cerca del objeto, presiona el gatillo trasero reflejado en el holograma del mando. \n\n Presiona B cuando hayas terminado.";
             desfibrilador.SetActive(true);
             mando.SetActive(true);
             gatilloLight.enabled = true;
@@ -98,25 +99,13 @@ public class tablero : MonoBehaviour
 
     }
 
-    // FUNCIONES (ASPECTO CONTROLADOR)
 
-    public void ActivarInterfaz()
-    {
-        if(Input.GetKeyDown(KeyCode.J)){
-        bool estadoActual = interfazPrincipal.activeSelf;
-        interfazPrincipal.SetActive(!estadoActual);
-        mando.SetActive(false);
-    // ASPECTO MODELO
-        if(!estadoActual & indicador==2)
-            { // MODELO VISTA actualizado.
-                Intrucciones.text = "Perfecto! Interactuaste con la interfaz, ahora vamos a interactuar con objetos, puedes cerrarla con J. Presiona H cuando estés listo.";
-            }
-        }
-    }
     public void SiguienteEtapa(){
-         if(Input.GetKeyDown(KeyCode.H)){
-            StartCoroutine(CambiarPantallaConRetraso(1));
-            Debug.Log("Press");
+         if(Input.GetKeyDown(KeyCode.B)){
+            indicador++;
+            Siguiente();
+            
+            
         }
 
         UnityEngine.XR.InputDevice rightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
@@ -139,19 +128,13 @@ public class tablero : MonoBehaviour
     }
     }
 
-     public void SiguienteTexto(){
-         if(indicador==1){
-            StartCoroutine(CambiarTexto(6));
-            
-        }
-    }
+    
 
 
 
     private void Update()
     {        
        SiguienteEtapa();
-       ActivarInterfaz();
 
         
     }
@@ -166,28 +149,15 @@ public class tablero : MonoBehaviour
         buttonSkip.SetActive(false);
     }
 
-    private IEnumerator CambiarTexto(float t)
-    {
-        yield return new WaitForSeconds(t);
-        Intrucciones.text = "Observa cómo un holograma de tu mando aparece en el entorno y te resalta el botón para moverte. presiona H cuando termines de explorar.";
-
-        if (mando != null){
-            mando.SetActive(true);
-        }
-        
-        
-    }
+  
 
     public void OnHoverEntered(HoverEnterEventArgs args)
     {
         if (args.interactable.gameObject.tag == "skip")
-        {
-            Debug.Log("Hoverrr");      
+        {   
             isOk = false;
             buttonSkip.SetActive(false);
-
-            Intrucciones2.SetActive(false);
-            Intrucciones1.SetActive(false);
+            Intrucciones.text="";
 
             interfazCodigos.SetActive(true);
             Destroy(mando);

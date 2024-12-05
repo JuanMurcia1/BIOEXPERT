@@ -1220,11 +1220,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 796091551}
   m_LocalEulerAnglesHint: {x: 10.008, y: 179.942, z: 0.304}
---- !u!1 &72683397 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 425a4ebc8269fed46adbbb80524effca, type: 3}
-  m_PrefabInstance: {fileID: 1003285177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &72940157
 GameObject:
   m_ObjectHideFlags: 0
@@ -5366,7 +5361,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 654.20135, z: -6.398376, w: -699.9377}
+  m_margin: {x: -76.279724, y: 707.5723, z: 96.990295, w: -722.1484}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5907,39 +5902,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601f543389838e443a2117d9125bf63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pasoNext: 1
   tolerance: 0.1
+  startTime: 0
+  completionTime: 0
+  errroresRest: 2
+  indicador: 0
+  score: 0
+  presentationDateTime: 
   MonitoriOriginal: {fileID: 543450652547867161}
   DEAoRIGINAL: {fileID: 1991862815}
-  acierto: {fileID: 288862404}
   flechaDEA: {fileID: 1207799096}
   flechaMonitori: {fileID: 259802906}
   DEA2: {fileID: 0}
-  desfibrilador: {fileID: 1991862824}
   aciertoVisual1: {fileID: 1049636882}
   aciertoVisual2: {fileID: 1665073070}
   perillaOff: {fileID: 6241042717779956454}
   perillaMarcapasos: {fileID: 783619855}
-  "interfaceFinalizaci\xF3n": {fileID: 821617171}
+  interfaceFinalizacion: {fileID: 821617171}
   interfaceCanvaFlotante: {fileID: 371398761}
   interfazMarcapasos: {fileID: 71310128}
-  interfazmarcaAumentaE: {fileID: 57729913}
+  interfazMarcaAumentaE: {fileID: 57729913}
   interfazMarcaEntrega: {fileID: 1547269461}
   conectorIndependienteMoni: {fileID: 30184015}
   conectormoniGood: {fileID: 1731121227}
   interfazPrincipal: {fileID: 1590859545}
+  panelCodigo: {fileID: 1644257088}
+  desfibrilador: {fileID: 1991862824}
+  acierto: {fileID: 288862404}
+  sendCodigo: {fileID: 0}
   lightRaton: {fileID: 348233539}
   lightBotonConfirm: {fileID: 377762645}
-  errroresRest: 2
   instruccion: {fileID: 1145211176}
   tiempo: {fileID: 266571934}
-  indicador: 0
-  PasoNext: 0
-  presentationDateTime: 
-  score: 0
-  completionTime: 0
-  startTime: 0
-  panelCodigo: {fileID: 1644257088}
-  sendCodigo: {fileID: 0}
 --- !u!4 &288862403
 Transform:
   m_ObjectHideFlags: 0
@@ -11121,7 +11116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &561486440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13241,7 +13236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &672693197
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -23704,183 +23699,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.7755084, y: 2.3401265, z: 1.436393}
   m_Center: {x: 5.249065, y: 0.39535078, z: 0.21820165}
---- !u!1 &1313029564
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1313029566}
-  - component: {fileID: 1313029565}
-  - component: {fileID: 1313029567}
-  m_Layer: 0
-  m_Name: ManagerSignos
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1313029565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313029564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 323ebf41df4778c429004463edd29a3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instruccion: {fileID: 1145211176}
-  tiempo: {fileID: 2001059185}
-  flechaMonitori: {fileID: 259802906}
-  flechaSPO2: {fileID: 0}
-  flechaPresion: {fileID: 72683397}
-  MonitoriOriginal: {fileID: 543450652547867161}
-  presionOriginal: {fileID: 543450652327706378}
-  SPO2Original: {fileID: 543450653049902208}
-  tolerance: 0.1
-  desfibrilador: {fileID: 1220107657}
-  perillaSignos: {fileID: 783619855}
-  perillaOff: {fileID: 6241042717779956454}
-  InterfazSignos: {fileID: 71310128}
-  InterfazSignosCompleta: {fileID: 0}
-  BotonInvas: {fileID: 429458639}
-  interfazPrincipal: {fileID: 1590859545}
-  "interfaceFinalizaci\xF3n": {fileID: 821617171}
-  interfaceCanvaFlotante: {fileID: 371398761}
-  acierto: {fileID: 1313029567}
-  aciertoVisual1: {fileID: 1049636882}
-  aciertoVisual2: {fileID: 1665073070}
-  aciertoVisual3: {fileID: 0}
-  cableSignosIndependiente: {fileID: 1368753293}
-  errroresRest: 2
-  perillaRight: {fileID: 320960815}
-  conectorRight: {fileID: 1368753293}
-  vitalesInstrumentos: {fileID: 919132148387161521}
-  presentationDateTime: 
-  score: 0
-  completionTime: 0
-  error1: 0
-  error2: 0
-  PasoNext: 0
-  startTime: 0
-  panelCodigo: {fileID: 1644257088}
-  indicador: 0
---- !u!4 &1313029566
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313029564}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06909154, y: 2.0529537, z: 0.82844186}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1313029567
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313029564}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 03d0bfe78d8d5264b919cb6ee90e369f, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1313441657
 GameObject:
   m_ObjectHideFlags: 0
@@ -52630,7 +52448,7 @@ MonoBehaviour:
   SPO2R: {fileID: 919132148773817914}
   monitoriR: {fileID: 919132148024326307}
   presionR: {fileID: 919132148387161520}
-  dialogoSignos: {fileID: 1313029565}
+  dialogoSignos: {fileID: 0}
   desfibrilador: {fileID: 1380915427}
 --- !u!1 &919132148717685942
 GameObject:
@@ -52695,7 +52513,7 @@ MonoBehaviour:
   SPO2R: {fileID: 919132148773817914}
   monitoriR: {fileID: 919132148024326307}
   presionR: {fileID: 919132148387161520}
-  dialogoSignos: {fileID: 1313029565}
+  dialogoSignos: {fileID: 0}
   desfibrilador: {fileID: 692269933}
 --- !u!1 &919132149236315354
 GameObject:
@@ -65127,7 +64945,6 @@ SceneRoots:
   - {fileID: 455922985}
   - {fileID: 1721209938}
   - {fileID: 313115903}
-  - {fileID: 1313029566}
   - {fileID: 275122640}
   - {fileID: 1039087869}
   - {fileID: 288862403}

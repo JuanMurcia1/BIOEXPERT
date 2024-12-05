@@ -44,7 +44,7 @@ public class VitalisInstrumentosMarca : MonoBehaviour
            dialogoMarcapasos.PasosSiguientes();
            dialogoMarcapasos.acierto.Play();
            dialogoMarcapasos.aciertoVisual1.SetActive(false);
-           dialogoMarcapasos.PasoNext= true;
+           dialogoMarcapasos.pasoNext= true;
 
            
            

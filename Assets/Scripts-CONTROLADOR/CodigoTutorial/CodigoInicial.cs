@@ -9,7 +9,7 @@ public class CodigoInicial : MonoBehaviour
 {
       public TMP_InputField inputField; // Referencia al InputField
       public string number;
-       public void OnHoverEntered(HoverEnterEventArgs args)
+       public void OnButtonSelected(SelectEnterEventArgs args)
     {
         if (args.interactable.gameObject.tag == "1"&& inputField.text.Length < 5)
         {

@@ -2815,7 +2815,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -76.53093, z: -397.36768, w: -699.9377}
+  m_margin: {x: 0, y: 819.95575, z: 180.89465, w: -850.6011}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3562,7 +3562,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!23 &303678979
 MeshRenderer:
@@ -7442,7 +7442,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &561486440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12615,7 +12615,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!23 &975076493
 MeshRenderer:
@@ -14469,7 +14469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1082890700
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -15806,7 +15806,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!23 &1172450063
 MeshRenderer:
@@ -18257,37 +18257,29 @@ MonoBehaviour:
   flechaMonitori: {fileID: 259802906}
   flechaSPO2: {fileID: 250260554}
   flechaPresion: {fileID: 72683397}
+  perillaSignos: {fileID: 783619855}
+  perillaOff: {fileID: 6241042717779956454}
+  InterfazSignos: {fileID: 71310128}
+  InterfazSignosCompleta: {fileID: 1037914175}
+  interfazPrincipal: {fileID: 1590859545}
+  interfaceFinalizacion: {fileID: 821617171}
+  interfaceCanvaFlotante: {fileID: 371398761}
+  aciertoVisual1: {fileID: 1049636882}
+  aciertoVisual2: {fileID: 1665073070}
+  aciertoVisual3: {fileID: 2014143414}
+  cableSignosIndependiente: {fileID: 1368753293}
+  perillaRight: {fileID: 320960815}
+  conectorRight: {fileID: 1368753293}
+  acierto: {fileID: 1313029567}
+  BotonInvas: {fileID: 429458639}
   MonitoriOriginal: {fileID: 543450652547867161}
   presionOriginal: {fileID: 543450652327706378}
   SPO2Original: {fileID: 543450653049902208}
   tolerance: 0.1
   desfibrilador: {fileID: 1220107657}
-  perillaSignos: {fileID: 783619855}
-  perillaOff: {fileID: 6241042717779956454}
-  InterfazSignos: {fileID: 71310128}
-  InterfazSignosCompleta: {fileID: 1037914175}
-  BotonInvas: {fileID: 429458639}
-  interfazPrincipal: {fileID: 1590859545}
-  "interfaceFinalizaci\xF3n": {fileID: 821617171}
-  interfaceCanvaFlotante: {fileID: 371398761}
-  acierto: {fileID: 1313029567}
-  aciertoVisual1: {fileID: 1049636882}
-  aciertoVisual2: {fileID: 1665073070}
-  aciertoVisual3: {fileID: 2014143414}
-  cableSignosIndependiente: {fileID: 1368753293}
-  errroresRest: 2
-  perillaRight: {fileID: 320960815}
-  conectorRight: {fileID: 1368753293}
   vitalesInstrumentos: {fileID: 919132148387161521}
-  presentationDateTime: 
-  score: 0
-  completionTime: 0
-  error1: 0
-  error2: 0
-  PasoNext: 0
-  startTime: 0
-  panelCodigo: {fileID: 1644257088}
   indicador: 0
+  pasoNext: 1
 --- !u!4 &1313029566
 Transform:
   m_ObjectHideFlags: 0
@@ -23147,11 +23139,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627549887}
   m_CullTransparentMesh: 1
---- !u!1 &1644257088 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3652865284795089175, guid: 50021ec7efa7bcc438745b6513ac780e, type: 3}
-  m_PrefabInstance: {fileID: 2144980215}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1662505406
 GameObject:
   m_ObjectHideFlags: 0
@@ -23387,7 +23374,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!23 &1662505411
 MeshRenderer:
@@ -35775,7 +35762,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!23 &1804593976
 MeshRenderer:
@@ -41653,7 +41640,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!33 &3534454317116272451
 MeshFilter:

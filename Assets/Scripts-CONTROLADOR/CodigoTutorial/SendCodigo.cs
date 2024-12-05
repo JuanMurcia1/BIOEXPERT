@@ -15,21 +15,50 @@ public class SendCodigo : MonoBehaviour
 
     void Awake()
     {
-        // Implementar Singleton para que solo haya una instancia del script
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Evita que este objeto sea destruido al cambiar de escena
+            DontDestroyOnLoad(gameObject); // Mantén esta línea si optas por la Opción 1
         }
         else
         {
-            Destroy(gameObject); // Si ya existe una instancia, destruimos la nueva para mantener solo una
+            Destroy(gameObject);
         }
     }
 
-    public void OnHoverEntered(HoverEnterEventArgs args)
+    void OnEnable()
     {
-        if (args.interactable.gameObject.tag == "enviar" && inputField.text.Length == 5)
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "tutorial")
+        {
+            // Reasignar las referencias a los elementos de la interfaz
+            inputField = GameObject.Find("InputField").GetComponent<TMP_InputField>();
+            instruccion = GameObject.Find("Intricciones2").GetComponent<TextMeshProUGUI>();
+
+            // Opcional: Limpiar el campo de texto y actualizar la instrucción
+            inputField.text = "";
+            instruccion.text = "Ingresa el código proporcionado.";
+        }
+    }
+
+    public void OnButtoEntered(SelectEnterEventArgs args)
+    {
+        if (inputField == null || instruccion == null)
+        {
+            Debug.LogError("Las referencias a la interfaz de usuario son nulas.");
+            return;
+        }
+
+        if (args.interactable.gameObject.CompareTag("enviar") && inputField.text.Length == 5)
         {
             savedCodigo = inputField.text;
             Debug.Log("Código guardado: " + savedCodigo);
@@ -37,7 +66,7 @@ public class SendCodigo : MonoBehaviour
 
             LoadSceneBasedOnCode(savedCodigo);  
         }
-        else if (args.interactable.gameObject.tag == "enviar" && inputField.text.Length < 5)
+        else if (args.interactable.gameObject.CompareTag("enviar") && inputField.text.Length < 5)
         {
             instruccion.text = "El código debe ser el de 5 dígitos que te dio la página";
         }
@@ -45,7 +74,7 @@ public class SendCodigo : MonoBehaviour
 
     private void LoadSceneBasedOnCode(string code)
     {
-        if (code.Length > 0)
+        if (!string.IsNullOrEmpty(code))
         {
             char firstDigit = code[0];  
 
@@ -55,13 +84,13 @@ public class SendCodigo : MonoBehaviour
                     SceneManager.LoadScene("DesfriManual");  
                     break;
                 case '2':
-                    SceneManager.LoadScene("SignosVitales");  // Carga la escena SignosVitales
+                    SceneManager.LoadScene("SignosVitales");  
                     break;
                 case '3':
-                    SceneManager.LoadScene("DEA");  // Carga la escena DEA
+                    SceneManager.LoadScene("DEA");  
                     break;
                 case '4':
-                    SceneManager.LoadScene("MarcaPas");  // Carga la escena MarcaPas
+                    SceneManager.LoadScene("MarcaPas");  
                     break;
                 default:
                     Debug.Log("Código no reconocido o primer dígito no válido");

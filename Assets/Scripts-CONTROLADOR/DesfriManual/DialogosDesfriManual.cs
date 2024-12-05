@@ -6,6 +6,8 @@ using TMPro;
 using UnityEngine.XR;
 using System;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;  
+
 
 
 
@@ -18,65 +20,66 @@ public class DialogosDesfriManual : MonoBehaviour
     public int score;
     public int completionTime;
     }
-    public TextMeshProUGUI instruccion;
-    public TextMeshProUGUI tiempo;
+
+    //SCRIPTS REFERENCIADOS
+    public Desfibrilador desfibrilador;
+    public VitalesInstrumentosDesfri vitalesInstrumentosDesfri;
+
+    //GAMEOBJECTS
     public GameObject perillaOff;
     public GameObject perillaManual;
-    public Desfibrilador desfibrilador;
+    public GameObject interfazPrincipal;
+    public GameObject interfazDismiCarga;
+    public GameObject interfazConfirmacion;
+    public GameObject flechaPalas;
+    public GameObject flechaDea;
+    public GameObject aciertoVisual1;
+    public GameObject aciertoVisual2;
+    public GameObject interfaceFinalización;
+    public GameObject interfaceCanvaFlotante;
+    public GameObject conectorIndependiente;
+    public GameObject conectorPalasDea;
+    public GameObject interfazManual;
+    public GameObject obj;
+
+    //VARIABLES
     public Transform PalasMesaOriginal;
     public Transform DEAoRIGINAL;
     public float tolerance = 0.1f;
     private Vector3 vector3PalasMesas;
     private Vector3 vector3DEA;
     public int indicador = 0;
-    public GameObject interfazPrincipal;
-    public GameObject interfazDismiCarga;
-    public GameObject interfazConfirmacion;
-    public GameObject flechaPalas;
-    public GameObject flechaDea;
-    public AudioSource acierto;
-    public GameObject aciertoVisual1;
-    public GameObject aciertoVisual2;
     public  bool PasoNext;
-    public GameObject interfazManual;
-    public VitalesInstrumentosDesfri vitalesInstrumentosDesfri;
     public Light lightRaton;
     public Light lightBotonConfirm;
     private bool finGuiada;
-    public GameObject interfaceFinalización;
-    public GameObject interfaceCanvaFlotante;
     public int errroresRest = 2;
-    public GameObject conectorIndependiente;
-    public GameObject conectorPalasDea;
     public float startTime;
     private bool isTimerRunning = false;
-    public GameObject panelCodigo;
-    private bool codeOn = false;
     private bool buttonBWasPressed = false; // Bandera para evitar múltiples detecciones por frame
-
     public string presentationDateTime;
     public int score;        
     public int completionTime;
     private string codigo;
+    public TextMeshProUGUI instruccion;
+    public TextMeshProUGUI tiempo;
+    public AudioSource acierto;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        codigoReceived();
         PasosSiguientes();
         acierto = GetComponent<AudioSource>();
         PasoNext= true;
         lightRaton.enabled= false;
         lightBotonConfirm.enabled = false;
+        obj = GameObject.Find("SendCodigoController");
 
-        if (SendCodigo.Instance != null)
-        {
-            codigo = SendCodigo.Instance.GetSavedCodigo();
-            codigo = codigo.Substring(codigo.Length - 4);
-            Debug.Log("Código obtenido desde AnotherScript: " + codigo);
-        }else{
-            Debug.Log("Código no encontrado en Dialogos");
-        }
+        
+
+        
     }
 
     // Update is called once per frame
@@ -88,7 +91,20 @@ public class DialogosDesfriManual : MonoBehaviour
             float completionTime = Time.time - startTime;
             UpdateTimeText(completionTime);
         }
-        panelCode();
+        
+    }
+
+    private void codigoReceived()
+    {
+        if (SendCodigo.Instance != null)
+        {
+            codigo = SendCodigo.Instance.GetSavedCodigo();
+            codigo = codigo.Substring(codigo.Length - 4);
+            Debug.Log("Código obtenido desde AnotherScript: " + codigo);
+        }else{
+            Debug.Log("Código no encontrado en Dialogos");
+        }
+
     }
 
     public void PasosSiguientes()
@@ -101,7 +117,7 @@ public class DialogosDesfriManual : MonoBehaviour
             " y utilizar algunos elementos de bioinstrumentación \n\n\n Presiona B para comenzar con la simulación. ";
         }else if (indicador == 1)
         {
-            instruccion.text = "A tu derecha podrás ver los elementos con los cuales vas a interactuar." + 
+            instruccion.text = "Gira a la derecha y podrás ver los subelementos con los cuales vas a interactuar." + 
             " Cuando agarres un objeto, podrás ver información del mismo en esta pantalla." + 
             " \n\n Cuando hayas terminado presiona B ";
             PasoNext= false;
@@ -141,8 +157,8 @@ public class DialogosDesfriManual : MonoBehaviour
         }else if (indicador ==6)
         { 
             instruccion.text= "!Bien hecho!." + "\n\nSelección de energía" +
-            "\n\n Interactua Con la perilla de ratón, resaltada en azúl, para disminuir la energía " +
-            "Esto nos permite elegir la energía que posteriormente se descargará sobre el paciente.";
+            "\n\n Interactua Con la perilla de ratón, resaltada en azúl, para disminuir la energía, " +
+            "esto nos permite elegir la energía que posteriormente se descargará sobre el maniquí.";
 
        
             
@@ -189,11 +205,6 @@ public class DialogosDesfriManual : MonoBehaviour
             " y necesitamos confirmar la carga de desfibrilación para el paciente, apresúrate y arréglalo" +
             " \n\n\n Errores restantes: " +errroresRest;
             StartTimer();
-             if (isTimerRunning)
-              {
-                completionTime = Mathf.RoundToInt(Time.time - startTime);
-                UpdateTimeText(completionTime);
-                }
             GetCurrentDateTime();                
             
             
@@ -212,10 +223,24 @@ public class DialogosDesfriManual : MonoBehaviour
         {
                   
             instruccion.text="Perfecto, has solucionado los errores, tenemos lecturas y está listo para una desfibrilación si se requiere.!"+
-            "\n\nPresiona B para compartir los resultados";
+            "\n\nTus resultados han sido compartidos en la página web y serás redirigido a tutorial para ingresar un nuevo código.";
              StopTimer();   
-            codeOn=true;
-            if(completionTime <= 10 )
+            puntajeTotal();
+            StartCoroutine(EnviarDatosAlServidor());
+            tiempo.text = "";
+            StartCoroutine(redirigirTutorial(9));
+            DestruirCodigo();
+            
+            
+            
+        }
+
+    }
+
+
+    public void puntajeTotal()
+    {
+        if(completionTime <= 10 )
             {
                 score= 100;
                 Debug.Log("Su puntuación es de: " + score);
@@ -230,23 +255,23 @@ public class DialogosDesfriManual : MonoBehaviour
 
             Debug.Log(completionTime);
 
-            StartCoroutine(EnviarDatosAlServidor());
-            
-            
-            
-        }
-
     }
     void GetCurrentDateTime()
     {
-        presentationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"); // Guarda la fecha y hora actual
-        Debug.Log("Fecha y Hora guardadas: " + presentationDateTime.ToString());
+        presentationDateTime = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ"); 
+        
     }
 
      private void StartTimer()
     {
         startTime = Time.time;
         isTimerRunning = true;
+
+        if (isTimerRunning)
+            {
+                completionTime = Mathf.RoundToInt(Time.time - startTime);
+                UpdateTimeText(completionTime);
+            }
     }
 
     public void StopTimer()
@@ -263,6 +288,16 @@ public class DialogosDesfriManual : MonoBehaviour
     private void UpdateTimeText(float completionTime)
     {
         tiempo.text = "Tiempo: " + completionTime.ToString("F2") + "Seg";
+    }
+
+    private void DestruirCodigo(){
+        
+        if (obj != null)
+        {
+            Destroy(obj);
+            Debug.Log("Objeto SendCodigoController destruido.");
+        }
+
     }
 
     IEnumerator EnviarDatosAlServidor()
@@ -298,22 +333,22 @@ public class DialogosDesfriManual : MonoBehaviour
             Debug.LogError("Error al enviar datos: " + request.error);
         }
     }
+
+    IEnumerator redirigirTutorial(float t)
+    {
+        
+        yield return new WaitForSeconds(t);
+
+        SceneManager.LoadScene("tutorial"); 
+
+    }
     
 
 
-    public void panelCode()
-    {
-        if(Input.GetKeyDown(KeyCode.H) && codeOn== true)
-        {
-            panelCodigo.SetActive(true);
-            interfaceCanvaFlotante.SetActive(false);
-
-        }
-    }
 
     public void actualizacionIndicador()
     {
-        if(Input.GetKeyDown(KeyCode.H) && PasoNext== true)
+        if(Input.GetKeyDown(KeyCode.B) && PasoNext== true)
         {
             indicador ++;
             PasosSiguientes();
